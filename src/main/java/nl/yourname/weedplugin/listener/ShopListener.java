@@ -34,16 +34,18 @@ public class ShopListener implements Listener {
         Plugin plugin = player.getServer().getPluginManager().getPlugin("WeedPlugin");
         int prijs = 0;
         ItemStack toGive = null;
-        if (clicked.getType() == Material.MELON_SEEDS) {
+        
+        if (clicked.getType() == Material.SEEDS && "§aWietzaadje".equals(clicked.getItemMeta().getDisplayName())) {
             prijs = plugin.getConfig().getInt("shop.zaad");
-            toGive = new ItemStack(Material.MELON_SEEDS);
-        } else if (clicked.getType() == Material.PAPER) {
+            toGive = new ItemStack(Material.SEEDS);
+            org.bukkit.inventory.meta.ItemMeta meta = toGive.getItemMeta();
+            meta.setDisplayName("§aWietzaadje");
+            toGive.setItemMeta(meta);
+        } else if (clicked.getType() == Material.PAPER && "§fZakje".equals(clicked.getItemMeta().getDisplayName())) {
             prijs = plugin.getConfig().getInt("shop.zakje");
             toGive = CustomItems.getZakje();
-        } else if (clicked.getType() == Material.BONE) {
-            prijs = plugin.getConfig().getInt("shop.upgrade");
-            toGive = new ItemStack(Material.BONE);
         }
+        
         if (toGive != null && prijs > 0) {
             double saldo = VaultUtil.getEconomy().getBalance(player);
             if (saldo < prijs) {

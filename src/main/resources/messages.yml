@@ -133,6 +133,7 @@ verkoop:
   deur:
     cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
     hit-count: "&eJe klopt op de deur... ({hits}/{needed})"
+    already-conversing: "&cJe bent al in een gesprek! Wacht tot het huidige gesprek is afgelopen."
     greeting: "&e[Persoon achter deur] &fWat doe je hier?"
     offer: "&e[{player}] &fIk heb wiet voor je te koop."
     police-scenario: "&e[Persoon achter deur] &fPunch, punch, punchen..."

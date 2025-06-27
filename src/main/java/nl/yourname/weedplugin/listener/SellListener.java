@@ -12,12 +12,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.Random;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Location;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Regelt verkoop van wietzakken aan deuren en NPC's.
@@ -31,6 +35,39 @@ public class SellListener implements Listener {
     private final Map<Player, Location> conversationLocations = new HashMap<>(); // Track deur locaties
     private static final int HITS_NEEDED = 3;
     private static final long COOLDOWN_TIME = 5 * 60 * 1000; // 5 minuten in milliseconden
+    
+    private File cooldownFile;
+    private YamlConfiguration cooldownConfig;
+    private Plugin plugin;
+
+    public void init(Plugin plugin) {
+        this.plugin = plugin;
+        cooldownFile = new File(plugin.getDataFolder(), "doorcooldowns.yml");
+        if (!cooldownFile.exists()) {
+            try { cooldownFile.createNewFile(); } catch (IOException ignored) {}
+        }
+        cooldownConfig = YamlConfiguration.loadConfiguration(cooldownFile);
+        loadDoorCooldowns();
+    }
+
+    public void saveDoorCooldowns() {
+        cooldownConfig.set("cooldowns", null);
+        for (Map.Entry<String, Long> entry : doorCooldowns.entrySet()) {
+            String doorLocation = entry.getKey();
+            long timestamp = entry.getValue();
+            cooldownConfig.set("cooldowns." + doorLocation, timestamp);
+        }
+        try { cooldownConfig.save(cooldownFile); } catch (IOException ignored) {}
+    }
+
+    public void loadDoorCooldowns() {
+        doorCooldowns.clear();
+        if (cooldownConfig.getConfigurationSection("cooldowns") == null) return;
+        for (String doorLocation : cooldownConfig.getConfigurationSection("cooldowns").getKeys(false)) {
+            long timestamp = cooldownConfig.getLong("cooldowns." + doorLocation);
+            doorCooldowns.put(doorLocation, timestamp);
+        }
+    }
 
     @EventHandler
     public void onDoorSell(PlayerInteractEvent event) {
@@ -55,6 +92,12 @@ public class SellListener implements Listener {
         String doorLocation = normalizeDoorLocation(block.getLocation());
         UUID playerId = player.getUniqueId();
         
+        // Check of speler al in een gesprek is
+        if (activeConversations.containsKey(player)) {
+            player.sendMessage(MessageUtil.getMessage("verkoop.deur.already-conversing"));
+            return;
+        }
+        
         // Check cooldown
         if (doorCooldowns.containsKey(doorLocation)) {
             long lastTime = doorCooldowns.get(doorLocation);
@@ -74,15 +117,16 @@ public class SellListener implements Listener {
         int hits = doorHitCount.getOrDefault(playerId, 0) + 1;
         doorHitCount.put(playerId, hits);
         
+        // Toon klop bericht voor alle hits (1 van 3, 2 van 3, 3 van 3)
+        player.sendMessage(MessageUtil.getMessage("verkoop.deur.hit-count", 
+            "hits", String.valueOf(hits), 
+            "needed", String.valueOf(HITS_NEEDED)));
+        
         if (hits >= HITS_NEEDED) {
             // Start selling process
             startSellingProcess(player, doorLocation);
             doorHitCount.remove(playerId);
             playerLastDoor.remove(playerId);
-        } else {
-            player.sendMessage(MessageUtil.getMessage("verkoop.deur.hit-count", 
-                "hits", String.valueOf(hits), 
-                "needed", String.valueOf(HITS_NEEDED)));
         }
     }
     

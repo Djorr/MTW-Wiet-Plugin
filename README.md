@@ -13,6 +13,7 @@ Een uitgebreide Minecraft plugin voor het kweken, oogsten en verkopen van wiet i
 - [Permissions](#-permissions)
 - [API Versie](#-api-versie)
 - [Support](#-support)
+- [Data persistentie](#-data-persistentie)
 
 ## ✨ Features
 
@@ -295,6 +296,25 @@ Voor vragen, bugs of feature requests:
 ## 📄 Licentie
 
 Dit project is gelicenseerd onder de MIT License - zie het [LICENSE](LICENSE) bestand voor details.
+
+## Data persistentie
+
+Deze plugin slaat belangrijke speldata automatisch op in YAML-bestanden in de pluginmap (`plugins/WeedPlugin/`). Hierdoor blijven planten, NPC's en deur-cooldowns behouden bij een server-restart of crash. Timers worden gepauzeerd tijdens downtime en hervat bij het opstarten.
+
+### plants.yml
+- **Locatie**: `plugins/WeedPlugin/plants.yml`
+- **Inhoud**: Alle geplante wietplanten, inclusief locatie, eigenaar, planttijd, groeitijd, en status (klaar of niet).
+- **Gedrag**: Als de server uitgaat, wordt de resterende groeitijd opgeslagen. Bij het opstarten worden planten en hun timers correct hervat.
+
+### doorcooldowns.yml
+- **Locatie**: `plugins/WeedPlugin/doorcooldowns.yml`
+- **Inhoud**: Cooldowns per deur (locatie) per speler, met timestamp van de laatste verkoop.
+- **Gedrag**: Cooldowns worden opgeslagen en bij het opstarten weer geladen, zodat spelers niet kunnen exploiten door te reloggen.
+
+### npcs.yml
+- **Locatie**: `plugins/WeedPlugin/npcs.yml`
+- **Inhoud**: Alle shop-NPC's, inclusief hun locatie, type en naam.
+- **Gedrag**: NPC's worden automatisch opnieuw gespawned bij het opstarten van de server, zodat de shop altijd beschikbaar blijft.
 
 ---
 
