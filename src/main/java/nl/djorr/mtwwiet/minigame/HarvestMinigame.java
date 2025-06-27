@@ -1,25 +1,19 @@
-package nl.yourname.weedplugin.minigame;
+package nl.djorr.mtwwiet.minigame;
 
-import nl.yourname.weedplugin.util.MessageUtil;
+import nl.djorr.mtwwiet.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import nl.yourname.weedplugin.WeedPlugin;
-import nl.yourname.weedplugin.listener.PlantListener;
-import nl.yourname.weedplugin.manager.PlantManager;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import nl.yourname.weedplugin.model.PlantData;
-import nl.yourname.weedplugin.minigame.IHarvestMinigame;
+import nl.djorr.mtwwiet.MTWWiet;
+import nl.djorr.mtwwiet.manager.PlantManager;
+import nl.djorr.mtwwiet.model.PlantData;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Oogst-minigame: klik op alle groene wool binnen de tijd.
@@ -97,7 +91,7 @@ public class HarvestMinigame implements IHarvestMinigame {
                 timeLeft--;
             }
         };
-        timerTask.runTaskTimer(WeedPlugin.getPlugin(WeedPlugin.class), 0L, 20L);
+        timerTask.runTaskTimer(MTWWiet.getPlugin(MTWWiet.class), 0L, 20L);
     }
 
     @Override
@@ -143,7 +137,7 @@ public class HarvestMinigame implements IHarvestMinigame {
         block.setType(org.bukkit.Material.AIR);
         org.bukkit.block.Block topBlock = block.getRelative(0, 1, 0);
         topBlock.setType(org.bukkit.Material.AIR);
-        nl.yourname.weedplugin.manager.PlantManager.getInstance().removePlant(plantData.plantBlockLocation);
+        PlantManager.getInstance().removePlant(plantData.plantBlockLocation);
         // Verwijder oogstSpeler lock
         plantData.oogstSpeler = null;
     }
@@ -164,7 +158,7 @@ public class HarvestMinigame implements IHarvestMinigame {
         block.setType(org.bukkit.Material.AIR);
         org.bukkit.block.Block topBlock = block.getRelative(0, 1, 0);
         topBlock.setType(org.bukkit.Material.AIR);
-        nl.yourname.weedplugin.manager.PlantManager.getInstance().removePlant(plantData.plantBlockLocation);
+        PlantManager.getInstance().removePlant(plantData.plantBlockLocation);
         // Geef lichte schade
         player.damage(2.0);
     }

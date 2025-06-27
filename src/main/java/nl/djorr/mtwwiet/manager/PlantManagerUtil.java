@@ -1,19 +1,16 @@
-package nl.yourname.weedplugin.manager;
+package nl.djorr.mtwwiet.manager;
 
-import nl.yourname.weedplugin.util.MessageUtil;
+import nl.djorr.mtwwiet.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import nl.yourname.weedplugin.WeedPlugin;
+import nl.djorr.mtwwiet.MTWWiet;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.Particle;
-import nl.yourname.weedplugin.model.PlantData;
+import nl.djorr.mtwwiet.model.PlantData;
 
 /**
  * Utility voor het plaatsen van wietplanten.
@@ -58,7 +55,7 @@ public class PlantManagerUtil {
         plantBlock.setData((byte) 0);
         // Hologram tijdens groei
         Hologram[] hologramRef = new Hologram[1];
-        hologramRef[0] = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), plantLoc.clone().add(0.5, 1.7, 0.5));
+        hologramRef[0] = HologramsAPI.createHologram(MTWWiet.getPlugin(MTWWiet.class), plantLoc.clone().add(0.5, 1.7, 0.5));
         hologramRef[0].appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", "10"));
         data.hologram = hologramRef[0];
         // Groei-timer
@@ -89,7 +86,7 @@ public class PlantManagerUtil {
                         // Verwijder oude groei-hologram
                         hologramRef[0].delete();
                         // Maak nieuwe hologram op y+2.7
-                        hologramRef[0] = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), plantLoc.clone().add(0.5, 2.7, 0.5));
+                        hologramRef[0] = HologramsAPI.createHologram(MTWWiet.getPlugin(MTWWiet.class), plantLoc.clone().add(0.5, 2.7, 0.5));
                         hologramRef[0].appendTextLine(MessageUtil.getMessage("planting.ready-to-harvest"));
                         data.hologram = hologramRef[0];
                     }
@@ -104,13 +101,13 @@ public class PlantManagerUtil {
                 secondsLeft--;
             }
         };
-        data.growthTask.runTaskTimer(WeedPlugin.getPlugin(WeedPlugin.class), 0L, 20L);
+        data.growthTask.runTaskTimer(MTWWiet.getPlugin(MTWWiet.class), 0L, 20L);
         return true;
     }
 
     public static void startGrowthCycle(Block block, PlantData data, Player player) {
         // Spawn Hologram boven het blok
-        Hologram hologram = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), block.getLocation().clone().add(0.5, 1.5, 0.5));
+        Hologram hologram = HologramsAPI.createHologram(MTWWiet.getPlugin(MTWWiet.class), block.getLocation().clone().add(0.5, 1.5, 0.5));
         hologram.appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", "10"));
         data.hologram = hologram;
         data.ready = false;
@@ -133,7 +130,7 @@ public class PlantManagerUtil {
                 hologram.appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", String.valueOf(secondsLeft)));
                 secondsLeft--;
             }
-        }.runTaskTimer(WeedPlugin.getPlugin(WeedPlugin.class), 0L, 20L);
+        }.runTaskTimer(MTWWiet.getPlugin(MTWWiet.class), 0L, 20L);
     }
 
     // --- Voeg deze class toe om saplings/double plants te beschermen tegen physics ---
@@ -146,8 +143,8 @@ public class PlantManagerUtil {
             org.bukkit.Material type = block.getType();
             if (type == Material.SAPLING || type == Material.DOUBLE_PLANT) {
                 // Check of dit een plugin-plant is
-                if (nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation()) ||
-                    (type == Material.DOUBLE_PLANT && nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation().add(0, -1, 0)))) {
+                if (PlantManager.getInstance().isPlantAt(block.getLocation()) ||
+                    (type == Material.DOUBLE_PLANT && PlantManager.getInstance().isPlantAt(block.getLocation().add(0, -1, 0)))) {
                     event.setCancelled(true);
                 }
             }
@@ -164,14 +161,14 @@ public class PlantManagerUtil {
             org.bukkit.Material type = block.getType();
             
             // Check of dit een plugin-plant is (onderste blok)
-            if (nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation())) {
+            if (PlantManager.getInstance().isPlantAt(block.getLocation())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(MessageUtil.getMessage("planting.cannot-break"));
                 return;
             }
             
             // Check of dit een plugin-plant is (bovenste blok van double plant)
-            if (type == Material.DOUBLE_PLANT && nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation().add(0, -1, 0))) {
+            if (type == Material.DOUBLE_PLANT && PlantManager.getInstance().isPlantAt(block.getLocation().add(0, -1, 0))) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(MessageUtil.getMessage("planting.cannot-break"));
                 return;

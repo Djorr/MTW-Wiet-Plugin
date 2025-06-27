@@ -104,4 +104,66 @@ hologram:
   
   # Tekst die wordt getoond tijdens het oogst countdown
   # %seconds_left% wordt vervangen door de resterende tijd in seconden
-  oogst-countdown: "&eOogsten: %seconds_left%s" 
+  oogst-countdown: "&eOogsten: %seconds_left%s"
+
+# ========================================
+# PLANTING CONFIGURATIE
+# ========================================
+planting:
+  # Groeitijd in milliseconden (5 minuten)
+  grow-time: 300000
+  # Minimale afstand tussen planten (in blokken)
+  min-distance: 3
+  # Minimale afstand tot dealer (in blokken)
+  dealer-distance: 10
+
+# ========================================
+# HARVESTING CONFIGURATIE
+# ========================================
+harvesting:
+  # Aantal blokken dat moet worden geklikt in de minigame
+  blocks-to-click: 5
+  # Tijd in seconden voor de minigame
+  time-limit: 10
+  # Kwaliteit van geoogste wiet (1-10)
+  quality: 8
+
+# ========================================
+# ECONOMY CONFIGURATIE
+# ========================================
+economy:
+  # Startgeld voor nieuwe spelers
+  start-balance: 100
+
+# ========================================
+# VERKOOP CONFIGURATIE
+# ========================================
+verkoop:
+  deur:
+    # Cooldown tijd in milliseconden (5 minuten)
+    cooldown-time: 300000
+    # Aantal klopjes nodig om deur te openen
+    hits-needed: 3
+    # Maximale afstand tijdens gesprek
+    max-afstand: 6
+    # Kans dat politie wordt gebeld (0.0 - 1.0)
+    politie-kans: 0.3
+    # Minimale prijs per stuk wiet
+    min-prijs-per-stuk: 10
+    # Maximale prijs per stuk wiet
+    max-prijs-per-stuk: 20
+    # Minimale hoeveelheid die wordt gevraagd
+    min-hoeveelheid: 3
+    # Maximale hoeveelheid die wordt gevraagd
+    max-hoeveelheid: 5
+    # Aantal pogingen voordat politie wordt gebeld (3-5)
+    max-attempts-before-police: 4
+    # Cooldown direct af bij geen wiet scenario
+    cooldown-on-no-weed: true
+    # Politie meldingen inschakelen
+    police-notifications: true
+    # Politie permissie voor meldingen
+    police-permission: "weedplugin.politie"
+  npc:
+    # Prijs per wietzak bij NPC verkoop
+    prijs-per-zak: 15 

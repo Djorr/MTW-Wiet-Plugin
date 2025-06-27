@@ -1,6 +1,11 @@
-package nl.yourname.weedplugin.command;
+package nl.djorr.mtwwiet.command;
 
-import nl.yourname.weedplugin.util.MessageUtil;
+import nl.djorr.mtwwiet.MTWWiet;
+import nl.djorr.mtwwiet.listener.ShopListener;
+import nl.djorr.mtwwiet.manager.NPCManager;
+import nl.djorr.mtwwiet.manager.PlantManagerUtil;
+import nl.djorr.mtwwiet.util.MessageUtil;
+import nl.djorr.mtwwiet.util.VaultUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,7 +35,7 @@ public class WietCommand implements CommandExecutor {
                     break;
                 }
                 // Probeer plant te plaatsen via PlantManager
-                boolean success = nl.yourname.weedplugin.manager.PlantManagerUtil.tryPlantWeed(player);
+                boolean success = PlantManagerUtil.tryPlantWeed(player);
                 if (success) {
                     player.sendMessage(MessageUtil.getMessage("planting.success"));
                 } else {
@@ -48,7 +53,7 @@ public class WietCommand implements CommandExecutor {
                     break;
                 }
                 Player balPlayer = (Player) sender;
-                double saldo = nl.yourname.weedplugin.util.VaultUtil.getEconomy().getBalance(balPlayer);
+                double saldo = VaultUtil.getEconomy().getBalance(balPlayer);
                 balPlayer.sendMessage(MessageUtil.getMessage("commands.balance", "amount", String.valueOf(saldo)));
                 break;
             case "geefgeld":
@@ -73,7 +78,7 @@ public class WietCommand implements CommandExecutor {
                     sender.sendMessage(MessageUtil.getMessage("commands.invalid-amount"));
                     break;
                 }
-                nl.yourname.weedplugin.util.VaultUtil.getEconomy().depositPlayer(target, bedrag);
+                VaultUtil.getEconomy().depositPlayer(target, bedrag);
                 sender.sendMessage(MessageUtil.getMessage("commands.money-given", "amount", String.valueOf(bedrag), "player", target.getName()));
                 target.sendMessage(MessageUtil.getMessage("commands.money-received", "amount", String.valueOf(bedrag)));
                 break;
@@ -94,7 +99,7 @@ public class WietCommand implements CommandExecutor {
                         break;
                     }
                     Player npcPlayer = (Player) sender;
-                    nl.yourname.weedplugin.manager.NPCManager.getInstance().spawnWeedNPC(npcPlayer.getLocation());
+                    NPCManager.getInstance().spawnWeedNPC(npcPlayer.getLocation());
                     sender.sendMessage(MessageUtil.getMessage("commands.npc-spawned"));
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (args.length < 3) {
@@ -103,7 +108,7 @@ public class WietCommand implements CommandExecutor {
                     }
                     try {
                         UUID npcId = UUID.fromString(args[2]);
-                        boolean removed = nl.yourname.weedplugin.manager.NPCManager.getInstance().removeWeedNPC(npcId);
+                        boolean removed = NPCManager.getInstance().removeWeedNPC(npcId);
                         if (removed) {
                             sender.sendMessage(MessageUtil.getMessage("commands.npc-removed"));
                         } else {
@@ -113,7 +118,7 @@ public class WietCommand implements CommandExecutor {
                         sender.sendMessage(MessageUtil.getMessage("commands.npc-invalid-id"));
                     }
                 } else if (args[1].equalsIgnoreCase("list")) {
-                    java.util.Map<UUID, net.citizensnpcs.api.npc.NPC> npcs = nl.yourname.weedplugin.manager.NPCManager.getInstance().getAllWeedNPCs();
+                    java.util.Map<UUID, net.citizensnpcs.api.npc.NPC> npcs = NPCManager.getInstance().getAllWeedNPCs();
                     if (npcs.isEmpty()) {
                         sender.sendMessage(MessageUtil.getMessage("commands.npc-none-found"));
                     } else {
@@ -133,46 +138,22 @@ public class WietCommand implements CommandExecutor {
             case "winkel":
                 if (!(sender instanceof Player)) {
                     sender.sendMessage(MessageUtil.getMessage("commands.shop-players-only"));
-                    break;
-                }
-                // Check permissie
-                if (!sender.hasPermission("weedplugin.winkel") && !sender.isOp()) {
-                    sender.sendMessage(MessageUtil.getMessage("commands.no-permission"));
-                    break;
+                    return true;
                 }
                 Player shopPlayer = (Player) sender;
-                org.bukkit.inventory.Inventory shop = org.bukkit.Bukkit.createInventory(null, 9, "§aGrowshop");
-                org.bukkit.plugin.Plugin pluginRef = org.bukkit.Bukkit.getPluginManager().getPlugin("WeedPlugin");
-                org.bukkit.configuration.file.FileConfiguration config = pluginRef.getConfig();
-                
-                // Wietzaadje (normale seeds)
-                org.bukkit.inventory.ItemStack zaad = new org.bukkit.inventory.ItemStack(org.bukkit.Material.SEEDS);
-                org.bukkit.inventory.meta.ItemMeta zaadMeta = zaad.getItemMeta();
-                zaadMeta.setDisplayName("§aWietzaadje");
-                java.util.List<String> zaadLore = new java.util.ArrayList<>();
-                zaadLore.add("§7Prijs: §e" + config.getInt("shop.zaad"));
-                zaadMeta.setLore(zaadLore);
-                zaad.setItemMeta(zaadMeta);
-                shop.setItem(0, zaad);
-                
-                // Zakje (papier)
-                org.bukkit.inventory.ItemStack zakje = nl.yourname.weedplugin.item.CustomItems.getZakje();
-                org.bukkit.inventory.meta.ItemMeta zakjeMeta = zakje.getItemMeta();
-                java.util.List<String> zakjeLore = new java.util.ArrayList<>();
-                zakjeLore.add("§7Prijs: §e" + config.getInt("shop.zakje"));
-                zakjeMeta.setLore(zakjeLore);
-                zakje.setItemMeta(zakjeMeta);
-                shop.setItem(1, zakje);
-                
-                shopPlayer.openInventory(shop);
-                break;
+                if (!shopPlayer.hasPermission("weedplugin.winkel") && !shopPlayer.isOp()) {
+                    sender.sendMessage(MessageUtil.getMessage("commands.no-permission"));
+                    return true;
+                }
+                ShopListener.openShop(shopPlayer);
+                return true;
             case "reload":
                 // Check permissie
                 if (!sender.hasPermission("weedplugin.reload") && !sender.isOp()) {
                     sender.sendMessage(MessageUtil.getMessage("commands.no-permission"));
                     break;
                 }
-                nl.yourname.weedplugin.WeedPlugin plugin = (nl.yourname.weedplugin.WeedPlugin) org.bukkit.Bukkit.getPluginManager().getPlugin("WeedPlugin");
+                MTWWiet plugin = (MTWWiet) org.bukkit.Bukkit.getPluginManager().getPlugin("WeedPlugin");
                 if (plugin != null) {
                     plugin.reloadConfig();
                     MessageUtil.reloadMessages(plugin);

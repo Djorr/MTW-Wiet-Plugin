@@ -1,8 +1,7 @@
-package nl.yourname.weedplugin.listener;
+package nl.djorr.mtwwiet.listener;
 
-import nl.yourname.weedplugin.item.CustomItems;
-import nl.yourname.weedplugin.util.MessageUtil;
-import nl.yourname.weedplugin.util.VaultUtil;
+import nl.djorr.mtwwiet.util.MessageUtil;
+import nl.djorr.mtwwiet.util.VaultUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ import java.util.Random;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import net.citizensnpcs.api.event.NPCRightClickEvent;
+
 import org.bukkit.Location;
 
 import java.io.File;
@@ -33,6 +32,7 @@ public class SellListener implements Listener {
     private final Map<UUID, String> playerLastDoor = new HashMap<>(); // speler -> laatste deur locatie
     private final Map<Player, String> activeConversations = new HashMap<>(); // Track actieve gesprekken
     private final Map<Player, Location> conversationLocations = new HashMap<>(); // Track deur locaties
+    private final Map<String, Integer> doorAttempts = new HashMap<>(); // Track pogingen per deur
     private static final int HITS_NEEDED = 3;
     private static final long COOLDOWN_TIME = 5 * 60 * 1000; // 5 minuten in milliseconden
     
@@ -156,6 +156,10 @@ public class SellListener implements Listener {
     }
     
     private void startSellingProcess(Player player, String doorLocation) {
+        // Tel pogingen voor deze deur
+        int attempts = doorAttempts.getOrDefault(doorLocation, 0) + 1;
+        doorAttempts.put(doorLocation, attempts);
+        
         // Sla de deur locatie op voor afstand controle
         String[] coords = doorLocation.split(",");
         Location doorLoc = new Location(player.getWorld(), 
@@ -168,10 +172,10 @@ public class SellListener implements Listener {
         player.sendMessage(""); // Lege regel
         player.sendMessage(MessageUtil.getMessage("verkoop.deur.greeting"));
         
-        // Start afstand controle
+        // Start afstand check
         startDistanceCheck(player, doorLocation);
         
-        // Simuleer een korte delay voor realistische dialoog
+        // Eerste bericht
         org.bukkit.Bukkit.getScheduler().runTaskLater(player.getServer().getPluginManager().getPlugin("WeedPlugin"), () -> {
             // Check of het gesprek nog actief is
             if (!activeConversations.containsKey(player)) {
@@ -183,6 +187,14 @@ public class SellListener implements Listener {
             // Haal config waarden op
             Plugin weedPlugin = player.getServer().getPluginManager().getPlugin("WeedPlugin");
             double politieKans = weedPlugin.getConfig().getDouble("verkoop.deur.politie-kans", 0.3);
+            int maxAttemptsBeforePolice = weedPlugin.getConfig().getInt("verkoop.deur.max-attempts-before-police", 4);
+            boolean policeNotifications = weedPlugin.getConfig().getBoolean("verkoop.deur.police-notifications", true);
+            String policePermission = weedPlugin.getConfig().getString("verkoop.deur.police-permission", "weedplugin.politie");
+            
+            // Check of politie moet worden gebeld op basis van pogingen
+            if (attempts >= maxAttemptsBeforePolice) {
+                politieKans = 1.0; // 100% kans
+            }
             
             // Random kans dat de persoon de politie belt
             if (random.nextDouble() < politieKans) {
@@ -194,6 +206,11 @@ public class SellListener implements Listener {
                     org.bukkit.Bukkit.getScheduler().runTaskLater(player.getServer().getPluginManager().getPlugin("WeedPlugin"), () -> {
                         if (!activeConversations.containsKey(player)) return;
                         player.sendMessage(MessageUtil.getMessage("verkoop.deur.police-call"));
+                        
+                        // Stuur politie melding
+                        if (policeNotifications) {
+                            sendPoliceNotification(player, doorLocation, policePermission);
+                        }
                         
                         org.bukkit.Bukkit.getScheduler().runTaskLater(player.getServer().getPluginManager().getPlugin("WeedPlugin"), () -> {
                             if (!activeConversations.containsKey(player)) return;
@@ -246,7 +263,24 @@ public class SellListener implements Listener {
                                     
                                     org.bukkit.Bukkit.getScheduler().runTaskLater(player.getServer().getPluginManager().getPlugin("WeedPlugin"), () -> {
                                         if (!activeConversations.containsKey(player)) return;
-                                        player.sendMessage(MessageUtil.getMessage("verkoop.deur.no-offer"));
+                                        
+                                        // Kies een willekeurige reactie
+                                        String[] responses = {
+                                            "verkoop.deur.no-weed-response-1",
+                                            "verkoop.deur.no-weed-response-2", 
+                                            "verkoop.deur.no-weed-response-3",
+                                            "verkoop.deur.no-weed-response-4",
+                                            "verkoop.deur.no-weed-response-5"
+                                        };
+                                        String randomResponse = responses[random.nextInt(responses.length)];
+                                        player.sendMessage(MessageUtil.getMessage(randomResponse));
+                                        
+                                        // Check of cooldown direct moet aflopen
+                                        boolean cooldownOnNoWeed = plugin.getConfig().getBoolean("verkoop.deur.cooldown-on-no-weed", true);
+                                        if (cooldownOnNoWeed) {
+                                            doorCooldowns.put(doorLocation, System.currentTimeMillis());
+                                            saveDoorCooldowns();
+                                        }
                                         
                                         // Einde gesprek
                                         endConversation(player, doorLocation);
@@ -281,7 +315,24 @@ public class SellListener implements Listener {
                                             // Controleer nog een laatste keer of de speler nog genoeg wiet heeft
                                             int finalWeedCount = countWeedInInventory(player);
                                             if (finalWeedCount < requestedAmount) {
-                                                player.sendMessage(MessageUtil.getMessage("verkoop.deur.no-offer"));
+                                                // Kies een willekeurige reactie
+                                                String[] responses = {
+                                                    "verkoop.deur.no-weed-response-1",
+                                                    "verkoop.deur.no-weed-response-2", 
+                                                    "verkoop.deur.no-weed-response-3",
+                                                    "verkoop.deur.no-weed-response-4",
+                                                    "verkoop.deur.no-weed-response-5"
+                                                };
+                                                String randomResponse = responses[random.nextInt(responses.length)];
+                                                player.sendMessage(MessageUtil.getMessage(randomResponse));
+                                                
+                                                // Check of cooldown direct moet aflopen
+                                                boolean cooldownOnNoWeed = plugin.getConfig().getBoolean("verkoop.deur.cooldown-on-no-weed", true);
+                                                if (cooldownOnNoWeed) {
+                                                    doorCooldowns.put(doorLocation, System.currentTimeMillis());
+                                                    saveDoorCooldowns();
+                                                }
+                                                
                                                 endConversation(player, doorLocation);
                                                 return;
                                             }
@@ -352,24 +403,20 @@ public class SellListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onNpcSell(NPCRightClickEvent event) {
-        Player player = event.getClicker();
+    /**
+     * Stuurt een melding naar alle spelers met politie permissie.
+     */
+    private void sendPoliceNotification(Player player, String doorLocation, String policePermission) {
+        String message = MessageUtil.getMessage("verkoop.deur.police-notification", 
+            "player", player.getName(),
+            "location", doorLocation);
         
-        // Check permissie voor NPC verkoop
-        if (!player.hasPermission("weedplugin.verkoop.npc") && !player.isOp()) {
-            return;
+        for (Player onlinePlayer : org.bukkit.Bukkit.getOnlinePlayers()) {
+            if (onlinePlayer.hasPermission(policePermission)) {
+                onlinePlayer.sendMessage(message);
+            }
         }
-        
-        ItemStack hand = player.getInventory().getItemInMainHand();
-        if (!hand.isSimilar(CustomItems.getGevuldeWietzak())) return;
-        Plugin plugin = player.getServer().getPluginManager().getPlugin("WeedPlugin");
-        int prijs = plugin.getConfig().getInt("verkoop.npc.prijs-per-zak");
-        VaultUtil.getEconomy().depositPlayer(player, prijs);
-        player.sendMessage(MessageUtil.getMessage("verkoop.npc.success", "amount", String.valueOf(prijs)));
-        hand.setAmount(hand.getAmount() - 1);
     }
 
-    // Placeholder voor NPC verkoop (Citizens integratie)
-    // TODO: Implementeer interactie met Citizens NPC's
+    // NPC verkoop is verwijderd - gebruik de dealer NPC voor shop functionaliteit
 } 

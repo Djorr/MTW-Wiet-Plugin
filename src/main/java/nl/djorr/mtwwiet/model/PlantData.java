@@ -1,11 +1,11 @@
-package nl.yourname.weedplugin.model;
+package nl.djorr.mtwwiet.model;
 
 import org.bukkit.entity.ArmorStand;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
-import nl.yourname.weedplugin.minigame.IHarvestMinigame;
-import nl.yourname.weedplugin.minigame.HarvestMinigame;
+import nl.djorr.mtwwiet.minigame.IHarvestMinigame;
+import nl.djorr.mtwwiet.minigame.HarvestMinigame;
 import org.bukkit.entity.Player;
 
 /**

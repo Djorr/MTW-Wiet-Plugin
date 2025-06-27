@@ -17,40 +17,52 @@ Een uitgebreide Minecraft plugin voor het kweken, oogsten en verkopen van wiet i
 
 ## ✨ Features
 
-### 🌱 Wiet Kweken Systeem
-- **Planten van wiet**: Gebruik `/wiet plant` om wiet te planten op geschikte locaties
-- **Realistische groei**: Wiet planten groeien over tijd (standaard 5 minuten)
-- **Visuele feedback**: Hologrammen tonen groei progressie
-- **Fysica bescherming**: Planten kunnen niet kapot door andere spelers of physics
+### 🌱 **Planting Systeem**
+- Plant wietzaadjes op gras om wietplanten te laten groeien
+- Realistische groeitijd (configureerbaar)
+- Minimale afstand tussen planten
+- **Nieuw**: Kan niet planten in de buurt van dealers
 
-### 🎮 Oogst Minigame
-- **Interactieve oogst**: Klik op groene blokken binnen de tijdlimiet
-- **Tijdsdruk**: 15 seconden om alle wiet blokken te vinden
-- **Beloningen**: Succesvolle oogst geeft wiet items
-- **Punishment**: Mislukking geeft schade en verliest de plant
+### 🎮 **Harvesting Minigame**
+- Interactieve oogst minigame
+- Klik op de juiste blokken binnen de tijd
+- Kwaliteitssysteem voor geoogste wiet
+- Beloningen gebaseerd op prestaties
 
-### 💰 Verkoop Systeem
-- **Deur-aan-deur verkoop**: Klop op deuren met wiet in je hand
-- **NPC verkoop**: Verkoop aan speciale NPCs in de wereld
-- **Realistische dialogen**: Dynamische gesprekken met bewoners
-- **Risico systeem**: Kans dat bewoners de politie bellen
-- **Cooldown systeem**: Voorkomt spam van deuren
+### 🏪 **Shop Systeem**
+- **Nieuw**: Dealer NPC met professionele skin
+- **Nieuw**: Winkel verkoopt alleen wietzaadjes (geen zakjes meer)
+- **Nieuw**: Items heten nu "Wiet" in plaats van "Weed"
+- Eenvoudige GUI interface
+- Configureerbare prijzen
 
-### 🛒 Shop Systeem
-- **Growshop**: Koop zaden, zakjes en upgrades
-- **Economie integratie**: Volledig geïntegreerd met Vault
-- **Configuratie prijzen**: Alle prijzen aanpasbaar in config
+### 💰 **Verkoop Systeem**
+- Verkoop wiet aan deuren in de wereld
+- Realistische dialoog met bewoners
+- **Nieuw**: Politie meldingen naar spelers met permissie
+- **Nieuw**: Verschillende reacties bij geen wiet scenario's
+- **Nieuw**: Cooldown opties configureerbaar
+- **Nieuw**: Automatische politie melding na 3-5 pogingen
+- Progressieve klopjes (1 van 3, 2 van 3, etc.)
+- Afstand controle tijdens gesprekken
 
-### 🎯 NPC Systeem
-- **Automatische spawn**: NPCs spawnen op geconfigureerde locaties
-- **Interactieve verkoop**: Klik op NPCs om wiet te verkopen
-- **Citizens integratie**: Gebruikt Citizens voor NPC management
+### 🏛️ **Economy Integratie**
+- Volledige Vault integratie
+- Balans commando's
+- Geld geven/ontvangen functionaliteit
+- Startgeld voor nieuwe spelers
 
-### 📦 Custom Items
-- **Wietzaadje**: Voor het planten van nieuwe wiet
-- **Wiet**: Geoogste wiet voor verkoop
-- **Zakjes**: Voor het verpakken van wiet
-- **Gevulde wietzakken**: Verpakte wiet voor verkoop
+### 🔧 **Admin Tools**
+- Reload configuratie
+- Cleanup invisible ArmorStands
+- NPC spawnen en beheren
+- Permissie systeem voor alle features
+
+### 💾 **Data Persistentie**
+- Alle data wordt automatisch opgeslagen
+- Planten, NPC's en cooldowns blijven behouden bij restart
+- Timers worden gepauzeerd tijdens downtime
+- YAML bestanden voor eenvoudige backup
 
 ## 🚀 Installatie
 
@@ -114,6 +126,13 @@ shop:
   upgrade: 100           # Prijs voor upgrade
 ```
 
+### Belangrijke nieuwe config opties:
+- `planting.dealer-distance`: Minimale afstand tot dealer voor planten
+- `verkoop.deur.max-attempts-before-police`: Aantal pogingen voordat politie wordt gebeld
+- `verkoop.deur.cooldown-on-no-weed`: Cooldown direct af bij geen wiet
+- `verkoop.deur.police-notifications`: Politie meldingen inschakelen
+- `verkoop.deur.police-permission`: Permissie voor politie meldingen
+
 ## 🎮 Gebruik
 
 ### Wiet Planten
@@ -148,15 +167,16 @@ shop:
 
 ## 📝 Commands
 
-| Command | Beschrijving | Gebruik |
-|---------|-------------|---------|
-| `/wiet plant` | Plant een wiet plant | `/wiet plant` |
-| `/wiet balans` | Toon je saldo | `/wiet balans` |
-| `/wiet geefgeld` | Geef geld aan speler | `/wiet geefgeld <speler> <bedrag>` |
-| `/wiet npc spawn` | Spawn een NPC | `/wiet npc spawn` |
-| `/wiet winkel` | Open de shop | `/wiet winkel` |
-| `/wiet reload` | Herlaad configuratie | `/wiet reload` |
-| `/wiet zaadje` | Krijg een wietzaadje | `/wiet zaadje` |
+| Commando | Beschrijving | Permissie |
+|----------|--------------|-----------|
+| `/wiet plant` | Plant een wietzaadje | `weedplugin.plant` |
+| `/wiet balans` | Bekijk je saldo | `weedplugin.balans` |
+| `/wiet geefgeld <speler> <bedrag>` | Geef geld aan speler | `weedplugin.geefgeld` |
+| `/wiet npc spawn` | Spawn een dealer NPC | `weedplugin.npc` |
+| `/wiet winkel` | Open de winkel | `weedplugin.winkel` |
+| `/wiet reload` | Herlaad configuratie | `weedplugin.reload` |
+| `/wiet cleanuparmorstands` | Verwijder invisible ArmorStands | `weedplugin.cleanup` |
+| `/wiet zaadje` | Krijg een wietzaadje | `weedplugin.zaadje` |
 
 ### Aliases
 - `/weed` - Alias voor `/wiet`
@@ -313,7 +333,7 @@ Deze plugin slaat belangrijke speldata automatisch op in YAML-bestanden in de pl
 
 ### npcs.yml
 - **Locatie**: `plugins/WeedPlugin/npcs.yml`
-- **Inhoud**: Alle shop-NPC's, inclusief hun locatie, type en naam.
+- **Inhoud**: Alle dealer NPC's, inclusief hun locatie, type en naam.
 - **Gedrag**: NPC's worden automatisch opnieuw gespawned bij het opstarten van de server, zodat de shop altijd beschikbaar blijft.
 
 ---

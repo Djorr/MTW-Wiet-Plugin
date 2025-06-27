@@ -1,4 +1,4 @@
-package nl.yourname.weedplugin.util;
+package nl.djorr.mtwwiet.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

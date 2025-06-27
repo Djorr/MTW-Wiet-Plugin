@@ -1,19 +1,15 @@
-package nl.yourname.weedplugin.manager;
+package nl.djorr.mtwwiet.manager;
 
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.api.CitizensAPI;
+import nl.djorr.mtwwiet.listener.ShopListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import nl.yourname.weedplugin.util.MessageUtil;
-import nl.yourname.weedplugin.item.CustomItems;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -79,7 +75,7 @@ public class NPCManager {
                 if (w == null) continue;
                 Location loc = new Location(w, x, y, z, yaw, pitch);
                 NPCRegistry registry = CitizensAPI.getNPCRegistry();
-                NPC npc = registry.createNPC(EntityType.PLAYER, "§aWiet Verkoper");
+                NPC npc = registry.createNPC(EntityType.PLAYER, "§cDealer");
                 npc.spawn(loc);
                 weedNPCs.put(npc.getUniqueId(), npc);
                 npcLocations.put(npc.getUniqueId(), loc);
@@ -88,11 +84,11 @@ public class NPCManager {
     }
 
     /**
-     * Spawn een nieuwe wiet NPC op de gegeven locatie.
+     * Spawn een nieuwe dealer NPC op de gegeven locatie.
      */
     public NPC spawnWeedNPC(Location location) {
         NPCRegistry registry = CitizensAPI.getNPCRegistry();
-        NPC npc = registry.createNPC(EntityType.PLAYER, "§aWiet Verkoper");
+        NPC npc = registry.createNPC(EntityType.PLAYER, "§cDealer");
         npc.spawn(location);
         weedNPCs.put(npc.getUniqueId(), npc);
         npcLocations.put(npc.getUniqueId(), location);
@@ -101,7 +97,7 @@ public class NPCManager {
     }
     
     /**
-     * Verwijder een wiet NPC.
+     * Verwijder een dealer NPC.
      */
     public boolean removeWeedNPC(UUID npcId) {
         NPC npc = weedNPCs.get(npcId);
@@ -116,7 +112,7 @@ public class NPCManager {
     }
     
     /**
-     * Check of een NPC een wiet NPC is.
+     * Check of een NPC een dealer NPC is.
      */
     public boolean isWeedNPC(UUID npcId) {
         return weedNPCs.containsKey(npcId);
@@ -126,30 +122,7 @@ public class NPCManager {
      * Open de shop GUI voor een speler.
      */
     public void openShop(Player player) {
-        Inventory shop = org.bukkit.Bukkit.createInventory(null, 9, "§aGrowshop");
-        Plugin plugin = player.getServer().getPluginManager().getPlugin("WeedPlugin");
-        org.bukkit.configuration.file.FileConfiguration config = plugin.getConfig();
-        
-        // Wietzaadje (normale seeds)
-        ItemStack zaad = new ItemStack(org.bukkit.Material.SEEDS);
-        ItemMeta zaadMeta = zaad.getItemMeta();
-        zaadMeta.setDisplayName("§aWietzaadje");
-        java.util.List<String> zaadLore = new java.util.ArrayList<>();
-        zaadLore.add("§7Prijs: §e" + config.getInt("shop.zaad"));
-        zaadMeta.setLore(zaadLore);
-        zaad.setItemMeta(zaadMeta);
-        shop.setItem(0, zaad);
-        
-        // Zakje (papier)
-        ItemStack zakje = CustomItems.getZakje();
-        ItemMeta zakjeMeta = zakje.getItemMeta();
-        java.util.List<String> zakjeLore = new java.util.ArrayList<>();
-        zakjeLore.add("§7Prijs: §e" + config.getInt("shop.zakje"));
-        zakjeMeta.setLore(zakjeLore);
-        zakje.setItemMeta(zakjeMeta);
-        shop.setItem(1, zakje);
-        
-        player.openInventory(shop);
+        ShopListener.openShop(player);
     }
     
     /**

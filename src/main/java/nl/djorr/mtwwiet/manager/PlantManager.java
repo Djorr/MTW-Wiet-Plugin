@@ -1,22 +1,19 @@
-package nl.yourname.weedplugin.manager;
+package nl.djorr.mtwwiet.manager;
 
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import nl.yourname.weedplugin.model.PlantData;
+
+import nl.djorr.mtwwiet.model.PlantData;
 import org.bukkit.entity.Player;
-import nl.yourname.weedplugin.WeedPlugin;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 /**
  * Beheert alle geplante wietplanten in de wereld.

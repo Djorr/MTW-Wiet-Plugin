@@ -1,12 +1,11 @@
-package nl.yourname.weedplugin.listener;
+package nl.djorr.mtwwiet.listener;
 
-import nl.yourname.weedplugin.minigame.HarvestMinigame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import nl.yourname.weedplugin.manager.PlantManager;
-import nl.yourname.weedplugin.model.PlantData;
+import nl.djorr.mtwwiet.manager.PlantManager;
+import nl.djorr.mtwwiet.model.PlantData;
 
 /**
  * Luistert naar clicks in de minigame GUI en stuurt deze door naar de juiste minigame instance.

@@ -1,13 +1,69 @@
-name: WeedPlugin
-main: nl.yourname.weedplugin.WeedPlugin
-version: 1.0
-api-version: 1.12
+name: MTW-Wiet
+version: 1.0.0
+main: nl.djorr.mtwwiet.MTWWiet
+author: Djorr
+description: Een uitgebreide wiet kweeksysteem plugin met planten, oogsten, verkoop en economie
+api-version: 1.13
+depend: [Vault]
+softdepend: [Citizens, HolographicDisplays]
+
 commands:
   wiet:
-    description: Hoofdcommando voor de WeedPlugin
-    usage: /<command> [plant|balans|geefgeld|npc|winkel|reload]
-    aliases: [weed]
-dependencies:
-  - Vault
-  - Citizens
-  - HolographicDisplays 
+    description: Hoofdcommando voor de MTW-Wiet plugin
+    usage: /wiet [plant|balans|geefgeld|npc|winkel|reload|cleanuparmorstands|zaadje]
+    permission: weedplugin.use
+    permission-message: Je hebt geen permissie om dit commando te gebruiken!
+
+permissions:
+  weedplugin.*:
+    description: Geeft toegang tot alle plugin functies
+    children:
+      weedplugin.use: true
+      weedplugin.plant: true
+      weedplugin.oogsten: true
+      weedplugin.balans: true
+      weedplugin.geefgeld: true
+      weedplugin.npc: true
+      weedplugin.winkel: true
+      weedplugin.reload: true
+      weedplugin.cleanup: true
+      weedplugin.zaadje: true
+      weedplugin.verkoop.deur: true
+      weedplugin.politie: true
+    default: op
+  weedplugin.use:
+    description: Basis plugin gebruik
+    default: true
+  weedplugin.plant:
+    description: Wiet planten
+    default: true
+  weedplugin.oogsten:
+    description: Wiet oogsten
+    default: true
+  weedplugin.balans:
+    description: Balans bekijken
+    default: true
+  weedplugin.geefgeld:
+    description: Geld geven aan andere spelers
+    default: op
+  weedplugin.npc:
+    description: NPC's spawnen en beheren
+    default: op
+  weedplugin.winkel:
+    description: Winkel gebruiken
+    default: true
+  weedplugin.reload:
+    description: Configuratie herladen
+    default: op
+  weedplugin.cleanup:
+    description: Cleanup uitvoeren
+    default: op
+  weedplugin.zaadje:
+    description: Wietzaadjes krijgen
+    default: op
+  weedplugin.verkoop.deur:
+    description: Verkopen aan deuren
+    default: true
+  weedplugin.politie:
+    description: Politie meldingen ontvangen
+    default: op

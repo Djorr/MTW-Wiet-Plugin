@@ -1,8 +1,8 @@
-package nl.yourname.weedplugin.listener;
+package nl.djorr.mtwwiet.listener;
 
 import net.citizensnpcs.api.event.NPCRightClickEvent;
-import nl.yourname.weedplugin.manager.NPCManager;
-import nl.yourname.weedplugin.util.MessageUtil;
+import nl.djorr.mtwwiet.manager.NPCManager;
+import nl.djorr.mtwwiet.util.MessageUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

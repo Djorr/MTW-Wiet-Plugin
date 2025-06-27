@@ -1,18 +1,21 @@
-package nl.yourname.weedplugin.listener;
+package nl.djorr.mtwwiet.listener;
 
-import nl.yourname.weedplugin.util.MessageUtil;
+import nl.djorr.mtwwiet.MTWWiet;
+import nl.djorr.mtwwiet.manager.NPCManager;
+import nl.djorr.mtwwiet.manager.PlantManagerUtil;
+import nl.djorr.mtwwiet.util.MessageUtil;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ArmorStand;
-import nl.yourname.weedplugin.manager.PlantManager;
+import nl.djorr.mtwwiet.manager.PlantManager;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import nl.yourname.weedplugin.model.PlantData;
+import nl.djorr.mtwwiet.model.PlantData;
 
 /**
  * Luistert naar interacties met wietplanten (plaatsen, oogsten, minigame).
@@ -65,7 +68,14 @@ public class PlantListener implements Listener {
                 player.sendMessage(MessageUtil.getMessage("commands.no-permission"));
                 return;
             }
-            boolean success = nl.yourname.weedplugin.manager.PlantManagerUtil.tryPlantWeed(player);
+            
+            // Check of speler te dicht bij een dealer is
+            if (isNearDealer(block.getLocation())) {
+                player.sendMessage(MessageUtil.getMessage("planting.too-close-to-dealer"));
+                return;
+            }
+            
+            boolean success = PlantManagerUtil.tryPlantWeed(player);
             if (success) event.setCancelled(true);
             return;
         }
@@ -89,9 +99,23 @@ public class PlantListener implements Listener {
             // Zet oogst-hologram
             if (data.hologram != null) { data.hologram.delete(); data.hologram = null; }
             if (data.oogstHologram != null) data.oogstHologram.delete();
-            data.oogstHologram = HologramsAPI.createHologram(nl.yourname.weedplugin.WeedPlugin.getPlugin(nl.yourname.weedplugin.WeedPlugin.class), block.getLocation().clone().add(0.5, 1.7, 0.5));
+            data.oogstHologram = HologramsAPI.createHologram(MTWWiet.getPlugin(MTWWiet.class), block.getLocation().clone().add(0.5, 1.7, 0.5));
             data.oogstHologram.appendTextLine(MessageUtil.getMessage("harvesting.harvesting-text"));
             PlantManager.getInstance().startMinigameAt(block.getLocation(), player);
         }
+    }
+    
+    /**
+     * Controleert of een locatie te dicht bij een dealer NPC is.
+     */
+    private boolean isNearDealer(org.bukkit.Location location) {
+        int dealerDistance = MTWWiet.getPlugin(MTWWiet.class).getConfig().getInt("planting.dealer-distance", 10);
+        
+        for (net.citizensnpcs.api.npc.NPC npc : NPCManager.getInstance().getAllWeedNPCs().values()) {
+            if (npc.getStoredLocation() != null && npc.getStoredLocation().distance(location) <= dealerDistance) {
+                return true;
+            }
+        }
+        return false;
     }
 } 

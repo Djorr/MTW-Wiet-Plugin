@@ -27,7 +27,7 @@ commands:
   money-received: "&aJe hebt {amount} ontvangen!"
   npc-usage: "&cGebruik: /wiet npc spawn"
   npc-players-only: "&cAlleen spelers kunnen NPC's spawnen."
-  npc-spawned: "&aNPC gespawned!"
+  npc-spawned: "&aDealer gespawned!"
   shop-players-only: "&cAlleen spelers kunnen de winkel openen."
   config-reloaded: "&aConfig herladen!"
   plugin-not-found: "&cPlugin niet gevonden!"
@@ -52,12 +52,13 @@ planting:
   cannot-break: "&cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame."
   growing-text: "&aWiet groeit... {seconds}s"
   ready-to-harvest: "&aKlaar om te oogsten!"
+  too-close-to-dealer: "&cJe kunt niet planten in de buurt van een dealer!"
 
 # ========================================
 # HARVESTING BERICHTEN
 # ========================================
 harvesting:
-  success: "&aSuccesvol geoogst! Je ontvangt Weed."
+  success: "&aSuccesvol geoogst! Je ontvangt Wiet."
   failed: "&cMislukt! Je hebt je vingers gesneden."
   inventory-title: "&aOogst de wiet!"
   wrong-block: "&cFout!"
@@ -81,7 +82,7 @@ bag:
 # ITEMS BERICHTEN
 # ========================================
 items:
-  weed-name: "&aWeed"
+  weed-name: "&aWiet"
   wiet-top-name: "&aWiet Top (kwaliteit {kwaliteit})"
   wiet-top-lore: "&7Vers geoogst"
   zakje-name: "&fZakje"
@@ -90,50 +91,13 @@ items:
   gevulde-wietzak-lore: "&7Bevat wiet van topkwaliteit"
 
 # ========================================
-# DOOR SELLING BERICHTEN
-# ========================================
-door-selling:
-  cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
-  knocking: "&eJe klopt op de deur... ({hits}/{needed})"
-  
-  # Gesprek berichten
-  conversation:
-    empty-line: ""
-    door-person-what: "&e[Persoon achter deur] &fWat doe je hier?"
-    player-selling: "&e[{player}] &fIk heb wiet voor je te koop."
-    
-    # Politie scenario
-    police-punch: "&e[Persoon achter deur] &fPunch, punch, punchen..."
-    police-calling: "&e[Persoon achter deur] &fIk ga een melding plaatsen bij de politie!"
-    police-leave: "&e[Persoon achter deur] &fWeg voor mijn deur!"
-    
-    # Normale verkoop
-    door-person-price: "&e[Persoon achter deur] &fOké, hoeveel per stuk?"
-    player-offer: "&e[{player}] &fIk heb er {count} en ze kosten {price} euro per stuk."
-    door-person-amount: "&e[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
-    
-    # Geen wiet scenario's
-    player-no-weed: "&e[{player}] &fIk heb helemaal geen wiet meer."
-    door-person-no-weed: "&e[Persoon achter deur] &fJe hebt het niet kunnen geven. Dan niet."
-    player-not-enough: "&e[{player}] &fIk heb er maar {count}."
-    door-person-not-enough: "&e[Persoon achter deur] &fNee, dankjewel. Ik wil er echt {amount} op dit moment hebben."
-    
-    # Succesvolle verkoop
-    player-total: "&e[{player}] &fOké, dat is dan {total} euro."
-    door-person-perfect: "&e[Persoon achter deur] &fPerfect!"
-    success-message: "&aJe hebt succesvol {amount} wiet verkocht voor {total} euro!"
-    
-    # Afstand controle
-    door-person-leaving: "&e[Persoon achter deur] &fWaarom loop je weg? Oké, dan niet."
-
-# ========================================
-# VERKOOP BERICHTEN (Algemene structuur)
+# VERKOOP BERICHTEN
 # ========================================
 verkoop:
   deur:
     cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
     hit-count: "&eJe klopt op de deur... ({hits}/{needed})"
-    already-conversing: "&cJe bent al in een gesprek! Wacht tot het huidige gesprek is afgelopen."
+    already-conversing: ""
     greeting: "&e[Persoon achter deur] &fWat doe je hier?"
     offer: "&e[{player}] &fIk heb wiet voor je te koop."
     police-scenario: "&e[Persoon achter deur] &fPunch, punch, punchen..."
@@ -143,13 +107,21 @@ verkoop:
     weed-count: "&e[{player}] &fIk heb er {count} en ze kosten {price} euro per stuk."
     request: "&e[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
     no-weed: "&e[{player}] &fIk heb helemaal geen wiet meer."
-    no-offer: "&e[Persoon achter deur] &fJe hebt het niet kunnen geven. Dan niet."
+    no-offer: "&e[Persoon achter deur] &fOké, maar waarom kom je dan op mijn deur staan als je helemaal niks hebt?"
     insufficient-weed: "&e[{player}] &fIk heb er maar {count}."
     insufficient-offer: "&e[Persoon achter deur] &fNee, dankjewel. Ik wil er echt {amount} op dit moment hebben."
     total-price: "&e[{player}] &fOké, dat is dan {total} euro."
     perfect: "&e[Persoon achter deur] &fPerfect!"
     success: "&aJe hebt succesvol {amount} wiet verkocht voor {total} euro!"
     too-far: "&e[Persoon achter deur] &fWaarom loop je weg? Oké, dan niet."
+    # Politie meldingen
+    police-notification: "&c&l[POLITIE MELDING] &fSpeler {player} is betrapt bij illegale verkoop op locatie {location}!"
+    # Geen wiet scenario's - verschillende reacties
+    no-weed-response-1: "&e[Persoon achter deur] &fOké, maar waarom kom je dan op mijn deur staan als je helemaal niks hebt?"
+    no-weed-response-2: "&e[Persoon achter deur] &fDan heb je hier niks te zoeken. Wegwezen!"
+    no-weed-response-3: "&e[Persoon achter deur] &fIk hoef je op dit moment niet meer te zien."
+    no-weed-response-4: "&e[Persoon achter deur] &fZonde van mijn tijd. Kom terug als je wat hebt."
+    no-weed-response-5: "&e[Persoon achter deur] &fDan niet. Ik heb betere dingen te doen."
   npc:
     success: "&aVerkocht aan NPC voor &e{amount}"
 
@@ -171,4 +143,5 @@ npc-selling:
 # {hits} - Aantal keren geklopt
 # {needed} - Benodigde aantal klopjes
 # {seconds} - Seconden (voor groei timer)
-# {kwaliteit} - Kwaliteit van wiet 
+# {kwaliteit} - Kwaliteit van wiet
+# {location} - Locatie van de verkoop 

@@ -1,4 +1,4 @@
-package nl.yourname.weedplugin.minigame;
+package nl.djorr.mtwwiet.minigame;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 
