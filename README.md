@@ -162,7 +162,82 @@ shop:
 
 ## 🔐 Permissions
 
-Momenteel zijn er geen specifieke permissions geïmplementeerd. Alle spelers kunnen alle commando's gebruiken.
+De WeedPlugin gebruikt een uitgebreid permissie systeem. Alle commando's en functies vereisen specifieke permissies, tenzij de speler OP is.
+
+### Commando Permissies
+
+| Permission | Beschrijving | Commando |
+|------------|-------------|----------|
+| `weedplugin.plant` | Wiet planten | `/wiet plant` |
+| `weedplugin.balans` | Saldo bekijken | `/wiet balans` |
+| `weedplugin.geefgeld` | Geld geven aan spelers | `/wiet geefgeld` |
+| `weedplugin.npc` | NPCs spawnen | `/wiet npc spawn` |
+| `weedplugin.winkel` | Shop openen | `/wiet winkel` |
+| `weedplugin.reload` | Config herladen | `/wiet reload` |
+| `weedplugin.cleanup` | Cleanup commando's | `/wiet cleanuparmorstands` |
+| `weedplugin.zaadje` | Wietzaadje krijgen | `/wiet zaadje` |
+
+### Functie Permissies
+
+| Permission | Beschrijving | Functie |
+|------------|-------------|---------|
+| `weedplugin.oogsten` | Wiet oogsten | Oogst minigame starten |
+| `weedplugin.verkoop.deur` | Deur-aan-deur verkoop | Verkopen aan deuren |
+| `weedplugin.verkoop.npc` | NPC verkoop | Verkopen aan NPCs |
+| `weedplugin.shop` | Shop gebruiken | Items kopen in shop |
+
+### Wildcard Permissies
+
+| Permission | Beschrijving |
+|------------|-------------|
+| `weedplugin.*` | Alle WeedPlugin permissies |
+| `weedplugin.verkoop.*` | Alle verkoop permissies |
+
+### Permission Plugin Voorbeelden
+
+#### LuckPerms
+```yaml
+# Basis gebruiker
+/lp group default permission set weedplugin.plant true
+/lp group default permission set weedplugin.balans true
+/lp group default permission set weedplugin.oogsten true
+/lp group default permission set weedplugin.verkoop.deur true
+/lp group default permission set weedplugin.verkoop.npc true
+/lp group default permission set weedplugin.shop true
+/lp group default permission set weedplugin.zaadje true
+
+# Verkoper (kan verkopen)
+/lp group verkoper permission set weedplugin.verkoop.* true
+
+# Admin (kan alles)
+/lp group admin permission set weedplugin.* true
+```
+
+#### PermissionsEx
+```yaml
+# Basis gebruiker
+/pex group default add weedplugin.plant
+/pex group default add weedplugin.balans
+/pex group default add weedplugin.oogsten
+/pex group default add weedplugin.verkoop.deur
+/pex group default add weedplugin.verkoop.npc
+/pex group default add weedplugin.shop
+/pex group default add weedplugin.zaadje
+
+# Verkoper
+/pex group verkoper add weedplugin.verkoop.*
+
+# Admin
+/pex group admin add weedplugin.*
+```
+
+### OP Spelers
+Spelers met OP status kunnen alle commando's en functies gebruiken zonder specifieke permissies.
+
+### Standaard Instellingen
+- **Nieuwe spelers**: Geen permissies (moeten toegewezen worden)
+- **OP spelers**: Alle permissies automatisch
+- **Server eigenaren**: Alle permissies automatisch
 
 ## 🎯 API Versie
 

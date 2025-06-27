@@ -1,5 +1,6 @@
 package nl.yourname.weedplugin.minigame;
 
+import nl.yourname.weedplugin.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,7 +41,7 @@ public class HarvestMinigame implements IHarvestMinigame {
     public HarvestMinigame(Player player, PlantData plantData) {
         this.player = player;
         this.plantData = plantData;
-        this.inv = Bukkit.createInventory(null, SIZE, "§aOogst de wiet!");
+        this.inv = Bukkit.createInventory(null, SIZE, MessageUtil.getMessage("harvesting.inventory-title"));
         this.timeLeft = 15 * (60 * 20); // 15 seconds
         if (plantData.stand != null) {
             this.plantBlockLoc = plantData.stand.getLocation();
@@ -58,11 +59,11 @@ public class HarvestMinigame implements IHarvestMinigame {
         for (int i = 0; i < SIZE; i++) slots.add(i);
         java.util.Collections.shuffle(slots);
         for (int i = 0; i < SIZE; i++) {
-            inv.setItem(i, createGlass((byte)14, "§cFout!"));
+            inv.setItem(i, createGlass((byte)14, MessageUtil.getMessage("harvesting.wrong-block")));
         }
         for (int i = 0; i < GREEN_COUNT; i++) {
             int slot = slots.remove(0);
-            inv.setItem(slot, createGlass((byte)5, "§aKlik mij!"));
+            inv.setItem(slot, createGlass((byte)5, MessageUtil.getMessage("harvesting.correct-block")));
             greenSlots.add(slot);
         }
     }
@@ -126,11 +127,11 @@ public class HarvestMinigame implements IHarvestMinigame {
         if (plantData.growthTask != null) plantData.growthTask.cancel();
         if (plantData.oogstHologram != null) { plantData.oogstHologram.delete(); plantData.oogstHologram = null; }
         player.closeInventory();
-        player.sendMessage("§aSuccesvol geoogst! Je ontvangt Weed.");
+        player.sendMessage(MessageUtil.getMessage("harvesting.success"));
         // Geef enchanted lilypad (ID 111)
         ItemStack weed = new ItemStack(Material.WATER_LILY);
         ItemMeta meta = weed.getItemMeta();
-        meta.setDisplayName("§aWeed");
+        meta.setDisplayName(MessageUtil.getMessage("items.weed-name"));
         meta.addEnchant(org.bukkit.enchantments.Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ENCHANTS);
         weed.setItemMeta(meta);
@@ -155,7 +156,7 @@ public class HarvestMinigame implements IHarvestMinigame {
         if (plantData.growthTask != null) plantData.growthTask.cancel();
         if (plantData.oogstHologram != null) { plantData.oogstHologram.delete(); plantData.oogstHologram = null; }
         player.closeInventory();
-        player.sendMessage("§cMislukt! Je hebt je vingers gesneden.");
+        player.sendMessage(MessageUtil.getMessage("harvesting.failed"));
         // Block break animatie en verwijder blok
         org.bukkit.block.Block block = plantData.plantBlockLocation.getWorld().getBlockAt(plantData.plantBlockLocation);
         block.getWorld().playEffect(block.getLocation(), org.bukkit.Effect.STEP_SOUND, block.getType());

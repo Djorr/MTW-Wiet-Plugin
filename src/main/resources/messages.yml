@@ -5,6 +5,14 @@
 # Wijzig deze teksten om de taal of berichten aan te passen
 
 # ========================================
+# PLUGIN BERICHTEN
+# ========================================
+plugin:
+  enabled: "&aWeedPlugin is ingeschakeld!"
+  disabled: "&aWeedPlugin is uitgeschakeld!"
+  vault-not-found: "&cKan Vault niet vinden! Plugin werkt niet zonder Vault."
+
+# ========================================
 # COMMANDO BERICHTEN
 # ========================================
 commands:
@@ -27,6 +35,7 @@ commands:
   seed-players-only: "&cAlleen spelers kunnen zaadjes krijgen."
   seed-received: "&aJe hebt een wietzaadje ontvangen!"
   unknown-subcommand: "&cOnbekend subcommando."
+  no-permission: "&cJe hebt geen permissie om dit commando te gebruiken!"
 
 # ========================================
 # PLANTING BERICHTEN
@@ -41,6 +50,8 @@ planting:
   not-ready: "&eDeze plant is nog niet klaar om te oogsten!"
   already-harvesting: "&cIemand anders is deze plant al aan het oogsten!"
   cannot-break: "&cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame."
+  growing-text: "&aWiet groeit... {seconds}s"
+  ready-to-harvest: "&aKlaar om te oogsten!"
 
 # ========================================
 # HARVESTING BERICHTEN
@@ -48,6 +59,10 @@ planting:
 harvesting:
   success: "&aSuccesvol geoogst! Je ontvangt Weed."
   failed: "&cMislukt! Je hebt je vingers gesneden."
+  inventory-title: "&aOogst de wiet!"
+  wrong-block: "&cFout!"
+  correct-block: "&aKlik mij!"
+  harvesting-text: "&eBezig met oogsten..."
 
 # ========================================
 # SHOP BERICHTEN
@@ -61,6 +76,18 @@ shop:
 # ========================================
 bag:
   created: "&aJe hebt een gevulde wietzak gemaakt!"
+
+# ========================================
+# ITEMS BERICHTEN
+# ========================================
+items:
+  weed-name: "&aWeed"
+  wiet-top-name: "&aWiet Top (kwaliteit {kwaliteit})"
+  wiet-top-lore: "&7Vers geoogst"
+  zakje-name: "&fZakje"
+  zakje-lore: "&7Leeg zakje voor wiet"
+  gevulde-wietzak-name: "&aGevulde Wietzak"
+  gevulde-wietzak-lore: "&7Bevat wiet van topkwaliteit"
 
 # ========================================
 # DOOR SELLING BERICHTEN
@@ -141,4 +168,6 @@ npc-selling:
 # {price} - Prijs per stuk
 # {total} - Totale prijs
 # {hits} - Aantal keren geklopt
-# {needed} - Benodigde aantal klopjes 
+# {needed} - Benodigde aantal klopjes
+# {seconds} - Seconden (voor groei timer)
+# {kwaliteit} - Kwaliteit van wiet 

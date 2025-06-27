@@ -11,7 +11,7 @@ public class WeedPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getLogger().info("WeedPlugin is ingeschakeld!");
+        getLogger().info(MessageUtil.getMessage("plugin.enabled"));
         
         // Laad messages
         MessageUtil.loadMessages(this);
@@ -21,7 +21,7 @@ public class WeedPlugin extends JavaPlugin {
         
         // Vault setup
         if (!nl.yourname.weedplugin.util.VaultUtil.setupEconomy()) {
-            getLogger().severe("Kan Vault niet vinden! Plugin werkt niet zonder Vault.");
+            getLogger().severe(MessageUtil.getMessage("plugin.vault-not-found"));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -43,6 +43,6 @@ public class WeedPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        getLogger().info("WeedPlugin is uitgeschakeld!");
+        getLogger().info(MessageUtil.getMessage("plugin.disabled"));
     }
 } 

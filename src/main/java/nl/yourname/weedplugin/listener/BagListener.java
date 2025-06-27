@@ -1,6 +1,7 @@
 package nl.yourname.weedplugin.listener;
 
 import nl.yourname.weedplugin.item.CustomItems;
+import nl.yourname.weedplugin.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class BagListener implements Listener {
             inv.setItem(zakjeSlot, null);
             inv.addItem(CustomItems.getGevuldeWietzak());
             Player player = (Player) event.getWhoClicked();
-            player.sendMessage("§aJe hebt een gevulde wietzak gemaakt!");
+            player.sendMessage(MessageUtil.getMessage("bag.created"));
         }
     }
 } 

@@ -1,5 +1,6 @@
 package nl.yourname.weedplugin.item;
 
+import nl.yourname.weedplugin.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,9 +14,9 @@ public class CustomItems {
     public static ItemStack getWietTop(int kwaliteit) {
         ItemStack item = new ItemStack(Material.DOUBLE_PLANT);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§aWiet Top (kwaliteit " + kwaliteit + ")");
+        meta.setDisplayName(MessageUtil.getMessage("items.wiet-top-name", "kwaliteit", String.valueOf(kwaliteit)));
         List<String> lore = new ArrayList<>();
-        lore.add("§7Vers geoogst");
+        lore.add(MessageUtil.getMessage("items.wiet-top-lore"));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
@@ -24,9 +25,9 @@ public class CustomItems {
     public static ItemStack getZakje() {
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§fZakje");
+        meta.setDisplayName(MessageUtil.getMessage("items.zakje-name"));
         List<String> lore = new ArrayList<>();
-        lore.add("§7Leeg zakje voor wiet");
+        lore.add(MessageUtil.getMessage("items.zakje-lore"));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
@@ -35,9 +36,9 @@ public class CustomItems {
     public static ItemStack getGevuldeWietzak() {
         ItemStack item = new ItemStack(Material.SUGAR);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§aGevulde Wietzak");
+        meta.setDisplayName(MessageUtil.getMessage("items.gevulde-wietzak-name"));
         List<String> lore = new ArrayList<>();
-        lore.add("§7Bevat wiet van topkwaliteit");
+        lore.add(MessageUtil.getMessage("items.gevulde-wietzak-lore"));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

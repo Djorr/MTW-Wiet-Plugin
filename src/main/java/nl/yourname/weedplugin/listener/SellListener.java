@@ -41,6 +41,11 @@ public class SellListener implements Listener {
         Player player = event.getPlayer();
         if (player.getGameMode() == org.bukkit.GameMode.CREATIVE) return;
         
+        // Check permissie voor deur verkoop
+        if (!player.hasPermission("weedplugin.verkoop.deur") && !player.isOp()) {
+            return;
+        }
+        
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (!isWeedItem(hand)) return;
         
@@ -306,6 +311,12 @@ public class SellListener implements Listener {
     @EventHandler
     public void onNpcSell(NPCRightClickEvent event) {
         Player player = event.getClicker();
+        
+        // Check permissie voor NPC verkoop
+        if (!player.hasPermission("weedplugin.verkoop.npc") && !player.isOp()) {
+            return;
+        }
+        
         ItemStack hand = player.getInventory().getItemInMainHand();
         if (!hand.isSimilar(CustomItems.getGevuldeWietzak())) return;
         Plugin plugin = player.getServer().getPluginManager().getPlugin("WeedPlugin");

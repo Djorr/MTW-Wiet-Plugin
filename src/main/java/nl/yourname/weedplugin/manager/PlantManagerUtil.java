@@ -1,5 +1,6 @@
 package nl.yourname.weedplugin.manager;
 
+import nl.yourname.weedplugin.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -22,13 +23,13 @@ public class PlantManagerUtil {
     public static boolean tryPlantWeed(Player player) {
         Block block = player.getTargetBlock((java.util.Set<Material>) null, 5);
         if (block == null || block.getType() != Material.GRASS) {
-            player.sendMessage("§cJe kunt alleen op gras planten!");
+            player.sendMessage(MessageUtil.getMessage("planting.grass-only"));
             return false;
         }
         // Check of speler een custom seed met naam 'Wietzaadje' in de hand heeft
         org.bukkit.inventory.ItemStack hand = player.getInventory().getItemInMainHand();
         if (hand == null || hand.getType() != Material.SEEDS || hand.getItemMeta() == null || !"§aWietzaadje".equals(hand.getItemMeta().getDisplayName())) {
-            player.sendMessage("§cJe moet een wietzaadje in je hand hebben om te planten!");
+            player.sendMessage(MessageUtil.getMessage("planting.need-seed"));
             return false;
         }
         // Verwijder 1 zaadje uit de hand
@@ -41,7 +42,7 @@ public class PlantManagerUtil {
         Location plantLoc = block.getLocation().add(0, 1, 0);
         PlantManager manager = PlantManager.getInstance();
         if (manager.isPlantAt(plantLoc)) {
-            player.sendMessage("§cHier staat al een plant!");
+            player.sendMessage(MessageUtil.getMessage("planting.already-planted"));
             return false;
         }
         PlantData data = new PlantData();
@@ -58,7 +59,7 @@ public class PlantManagerUtil {
         // Hologram tijdens groei
         Hologram[] hologramRef = new Hologram[1];
         hologramRef[0] = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), plantLoc.clone().add(0.5, 1.7, 0.5));
-        hologramRef[0].appendTextLine("§aWiet groeit... 10s");
+        hologramRef[0].appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", "10"));
         data.hologram = hologramRef[0];
         // Groei-timer
         data.growthTask = new BukkitRunnable() {
@@ -81,7 +82,7 @@ public class PlantManagerUtil {
                         // Geen ruimte, laat de sapling staan en markeer als klaar
                         plantBlock.setType(Material.SAPLING);
                         plantBlock.setData((byte) 0);
-                        player.sendMessage("§cEr is te weinig ruimte boven de plant om te groeien!");
+                        player.sendMessage(MessageUtil.getMessage("planting.not-enough-space"));
                     }
                     // Update bestaande hologram naar oogstbaar
                     if (hologramRef[0] != null) {
@@ -89,7 +90,7 @@ public class PlantManagerUtil {
                         hologramRef[0].delete();
                         // Maak nieuwe hologram op y+2.7
                         hologramRef[0] = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), plantLoc.clone().add(0.5, 2.7, 0.5));
-                        hologramRef[0].appendTextLine("§aKlaar om te oogsten!");
+                        hologramRef[0].appendTextLine(MessageUtil.getMessage("planting.ready-to-harvest"));
                         data.hologram = hologramRef[0];
                     }
                     this.cancel();
@@ -99,7 +100,7 @@ public class PlantManagerUtil {
                 if (hologramRef[0].size() > 0) {
                     hologramRef[0].removeLine(0);
                 }
-                hologramRef[0].appendTextLine("§aWiet groeit... " + secondsLeft + "s");
+                hologramRef[0].appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", String.valueOf(secondsLeft)));
                 secondsLeft--;
             }
         };
@@ -110,7 +111,7 @@ public class PlantManagerUtil {
     public static void startGrowthCycle(Block block, PlantData data, Player player) {
         // Spawn Hologram boven het blok
         Hologram hologram = HologramsAPI.createHologram(WeedPlugin.getPlugin(WeedPlugin.class), block.getLocation().clone().add(0.5, 1.5, 0.5));
-        hologram.appendTextLine("§aWiet groeit... 10s");
+        hologram.appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", "10"));
         data.hologram = hologram;
         data.ready = false;
         // Start groei-timer
@@ -129,7 +130,7 @@ public class PlantManagerUtil {
                     return;
                 }
                 hologram.clearLines();
-                hologram.appendTextLine("§aWiet groeit... " + secondsLeft + "s");
+                hologram.appendTextLine(MessageUtil.getMessage("planting.growing-text", "seconds", String.valueOf(secondsLeft)));
                 secondsLeft--;
             }
         }.runTaskTimer(WeedPlugin.getPlugin(WeedPlugin.class), 0L, 20L);
@@ -165,14 +166,14 @@ public class PlantManagerUtil {
             // Check of dit een plugin-plant is (onderste blok)
             if (nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation())) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage("§cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame.");
+                event.getPlayer().sendMessage(MessageUtil.getMessage("planting.cannot-break"));
                 return;
             }
             
             // Check of dit een plugin-plant is (bovenste blok van double plant)
             if (type == Material.DOUBLE_PLANT && nl.yourname.weedplugin.manager.PlantManager.getInstance().isPlantAt(block.getLocation().add(0, -1, 0))) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage("§cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame.");
+                event.getPlayer().sendMessage(MessageUtil.getMessage("planting.cannot-break"));
                 return;
             }
         }

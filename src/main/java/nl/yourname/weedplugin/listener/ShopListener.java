@@ -2,6 +2,7 @@ package nl.yourname.weedplugin.listener;
 
 import nl.yourname.weedplugin.item.CustomItems;
 import nl.yourname.weedplugin.util.VaultUtil;
+import nl.yourname.weedplugin.util.MessageUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,14 @@ public class ShopListener implements Listener {
         if (!(event.getWhoClicked() instanceof Player)) return;
         Player player = (Player) event.getWhoClicked();
         if (event.getView().getTitle() == null || !event.getView().getTitle().contains("Growshop")) return;
+        
+        // Check permissie voor shop gebruik
+        if (!player.hasPermission("weedplugin.shop") && !player.isOp()) {
+            player.sendMessage(MessageUtil.getMessage("commands.no-permission"));
+            event.setCancelled(true);
+            return;
+        }
+        
         event.setCancelled(true);
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || !clicked.hasItemMeta()) return;
@@ -38,12 +47,12 @@ public class ShopListener implements Listener {
         if (toGive != null && prijs > 0) {
             double saldo = VaultUtil.getEconomy().getBalance(player);
             if (saldo < prijs) {
-                player.sendMessage("§cJe hebt niet genoeg geld!");
+                player.sendMessage(MessageUtil.getMessage("shop.not-enough-money"));
                 return;
             }
             VaultUtil.getEconomy().withdrawPlayer(player, prijs);
             player.getInventory().addItem(toGive);
-            player.sendMessage("§aAankoop gelukt!");
+            player.sendMessage(MessageUtil.getMessage("shop.purchase-success"));
         }
     }
 } 
