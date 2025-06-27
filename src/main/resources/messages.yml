@@ -1,0 +1,144 @@
+# ========================================
+# WeedPlugin Language Bestand
+# ========================================
+# Dit bestand bevat alle teksten die in de plugin worden gebruikt
+# Wijzig deze teksten om de taal of berichten aan te passen
+
+# ========================================
+# COMMANDO BERICHTEN
+# ========================================
+commands:
+  usage: "&aGebruik: /wiet [plant|balans|geefgeld|npc|winkel|reload|cleanuparmorstands|zaadje]"
+  players-only: "&cAlleen spelers kunnen planten."
+  balance: "&aJe saldo: &e{amount}"
+  balance-console: "&cAlleen spelers hebben een balans."
+  give-money-usage: "&cGebruik: /wiet geefgeld <speler> <bedrag>"
+  player-not-found: "&cSpeler niet gevonden."
+  invalid-amount: "&cOngeldig bedrag."
+  money-given: "&a{amount} gegeven aan {player}"
+  money-received: "&aJe hebt {amount} ontvangen!"
+  npc-usage: "&cGebruik: /wiet npc spawn"
+  npc-players-only: "&cAlleen spelers kunnen NPC's spawnen."
+  npc-spawned: "&aNPC gespawned!"
+  shop-players-only: "&cAlleen spelers kunnen de winkel openen."
+  config-reloaded: "&aConfig herladen!"
+  plugin-not-found: "&cPlugin niet gevonden!"
+  armorstands-removed: "&a{count} invisible ArmorStands verwijderd."
+  seed-players-only: "&cAlleen spelers kunnen zaadjes krijgen."
+  seed-received: "&aJe hebt een wietzaadje ontvangen!"
+  unknown-subcommand: "&cOnbekend subcommando."
+
+# ========================================
+# PLANTING BERICHTEN
+# ========================================
+planting:
+  success: "&aJe hebt een wietplant geplaatst!"
+  cannot-plant: "&cJe kunt hier geen wiet planten."
+  grass-only: "&cJe kunt alleen op gras planten!"
+  need-seed: "&cJe moet een wietzaadje in je hand hebben om te planten!"
+  already-planted: "&cHier staat al een plant!"
+  not-enough-space: "&cEr is te weinig ruimte boven de plant om te groeien!"
+  not-ready: "&eDeze plant is nog niet klaar om te oogsten!"
+  already-harvesting: "&cIemand anders is deze plant al aan het oogsten!"
+  cannot-break: "&cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame."
+
+# ========================================
+# HARVESTING BERICHTEN
+# ========================================
+harvesting:
+  success: "&aSuccesvol geoogst! Je ontvangt Weed."
+  failed: "&cMislukt! Je hebt je vingers gesneden."
+
+# ========================================
+# SHOP BERICHTEN
+# ========================================
+shop:
+  not-enough-money: "&cJe hebt niet genoeg geld!"
+  purchase-success: "&aAankoop gelukt!"
+
+# ========================================
+# BAG BERICHTEN
+# ========================================
+bag:
+  created: "&aJe hebt een gevulde wietzak gemaakt!"
+
+# ========================================
+# DOOR SELLING BERICHTEN
+# ========================================
+door-selling:
+  cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
+  knocking: "&eJe klopt op de deur... ({hits}/{needed})"
+  
+  # Gesprek berichten
+  conversation:
+    empty-line: ""
+    door-person-what: "&e[Persoon achter deur] &fWat doe je hier?"
+    player-selling: "&e[{player}] &fIk heb wiet voor je te koop."
+    
+    # Politie scenario
+    police-punch: "&e[Persoon achter deur] &fPunch, punch, punchen..."
+    police-calling: "&e[Persoon achter deur] &fIk ga een melding plaatsen bij de politie!"
+    police-leave: "&e[Persoon achter deur] &fWeg voor mijn deur!"
+    
+    # Normale verkoop
+    door-person-price: "&e[Persoon achter deur] &fOké, hoeveel per stuk?"
+    player-offer: "&e[{player}] &fIk heb er {count} en ze kosten {price} euro per stuk."
+    door-person-amount: "&e[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
+    
+    # Geen wiet scenario's
+    player-no-weed: "&e[{player}] &fIk heb helemaal geen wiet meer."
+    door-person-no-weed: "&e[Persoon achter deur] &fJe hebt het niet kunnen geven. Dan niet."
+    player-not-enough: "&e[{player}] &fIk heb er maar {count}."
+    door-person-not-enough: "&e[Persoon achter deur] &fNee, dankjewel. Ik wil er echt {amount} op dit moment hebben."
+    
+    # Succesvolle verkoop
+    player-total: "&e[{player}] &fOké, dat is dan {total} euro."
+    door-person-perfect: "&e[Persoon achter deur] &fPerfect!"
+    success-message: "&aJe hebt succesvol {amount} wiet verkocht voor {total} euro!"
+    
+    # Afstand controle
+    door-person-leaving: "&e[Persoon achter deur] &fWaarom loop je weg? Oké, dan niet."
+
+# ========================================
+# VERKOOP BERICHTEN (Algemene structuur)
+# ========================================
+verkoop:
+  deur:
+    cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
+    hit-count: "&eJe klopt op de deur... ({hits}/{needed})"
+    greeting: "&e[Persoon achter deur] &fWat doe je hier?"
+    offer: "&e[{player}] &fIk heb wiet voor je te koop."
+    police-scenario: "&e[Persoon achter deur] &fPunch, punch, punchen..."
+    police-call: "&e[Persoon achter deur] &fIk ga een melding plaatsen bij de politie!"
+    police-leave: "&e[Persoon achter deur] &fWeg voor mijn deur!"
+    normal-scenario: "&e[Persoon achter deur] &fOké, hoeveel per stuk?"
+    weed-count: "&e[{player}] &fIk heb er {count} en ze kosten {price} euro per stuk."
+    request: "&e[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
+    no-weed: "&e[{player}] &fIk heb helemaal geen wiet meer."
+    no-offer: "&e[Persoon achter deur] &fJe hebt het niet kunnen geven. Dan niet."
+    insufficient-weed: "&e[{player}] &fIk heb er maar {count}."
+    insufficient-offer: "&e[Persoon achter deur] &fNee, dankjewel. Ik wil er echt {amount} op dit moment hebben."
+    total-price: "&e[{player}] &fOké, dat is dan {total} euro."
+    perfect: "&e[Persoon achter deur] &fPerfect!"
+    success: "&aJe hebt succesvol {amount} wiet verkocht voor {total} euro!"
+    too-far: "&e[Persoon achter deur] &fWaarom loop je weg? Oké, dan niet."
+  npc:
+    success: "&aVerkocht aan NPC voor &e{amount}"
+
+# ========================================
+# NPC SELLING BERICHTEN
+# ========================================
+npc-selling:
+  sold: "&aVerkocht aan NPC voor &e{amount}"
+
+# ========================================
+# PLACEHOLDERS
+# ========================================
+# Beschikbare placeholders die je kunt gebruiken in de teksten:
+# {player} - Speler naam
+# {amount} - Bedrag/hoeveelheid
+# {count} - Aantal items
+# {price} - Prijs per stuk
+# {total} - Totale prijs
+# {hits} - Aantal keren geklopt
+# {needed} - Benodigde aantal klopjes 

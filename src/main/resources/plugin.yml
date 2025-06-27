@@ -1,0 +1,13 @@
+name: WeedPlugin
+main: nl.yourname.weedplugin.WeedPlugin
+version: 1.0
+api-version: 1.12
+commands:
+  wiet:
+    description: Hoofdcommando voor de WeedPlugin
+    usage: /<command> [plant|balans|geefgeld|npc|winkel|reload]
+    aliases: [weed]
+dependencies:
+  - Vault
+  - Citizens
+  - HolographicDisplays 

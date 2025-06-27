@@ -1,2 +1,28 @@
-# Auto detect text files and perform LF normalization
+# Set default behavior to automatically normalize line endings
 * text=auto
+
+# Explicitly declare text files we want to treat as UTF-8
+*.java       text eol=lf
+*.xml        text eol=lf
+*.yml        text eol=lf
+*.md         text eol=lf
+*.properties text eol=lf
+*.gitignore  text eol=lf
+*.gitattributes text eol=lf
+
+# Binary files
+*.jar        binary
+*.war        binary
+*.png        binary
+*.jpg        binary
+*.gif        binary
+*.class      binary
+*.zip        binary
+*.tar.gz     binary
+*.exe        binary
+
+# Linguist overrides (GitHub language stats & highlighting)
+*.yml linguist-language=YAML
+*.md  linguist-language=Markdown
+*.xml linguist-language=XML
+*.java linguist-language=Java

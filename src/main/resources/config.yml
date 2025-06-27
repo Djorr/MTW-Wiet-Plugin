@@ -1,0 +1,107 @@
+# ========================================
+# WeedPlugin Configuratie
+# ========================================
+# Dit bestand bevat alle instellingen voor de WeedPlugin
+# Wijzig deze waarden om het gedrag van de plugin aan te passen
+
+# ========================================
+# PLANT GROEI INSTELLINGEN
+# ========================================
+plant:
+  # Tijd in seconden die een wiet plant nodig heeft om volledig te groeien
+  # Na deze tijd kan de plant geoogst worden via het oogst minigame
+  grow-time-seconds: 300 # 5 minuten
+
+# ========================================
+# OOGST MINIGAME INSTELLINGEN
+# ========================================
+oogst-minigame:
+  # Tijdslimiet in seconden voor het oogst minigame
+  # De speler moet binnen deze tijd alle wiet blokken vinden
+  time-limit-seconds: 5
+  
+  # Schade die de speler krijgt als het minigame mislukt
+  # Dit is de hoeveelheid hartjes die verloren gaan
+  fail-damage: 2
+
+# ========================================
+# VERKOOP SYSTEEM INSTELLINGEN
+# ========================================
+verkoop:
+  # NPC verkoop instellingen (voor NPCs in de wereld)
+  npc:
+    # Prijs per zak wiet wanneer verkocht aan een NPC
+    prijs-per-zak: 50
+  
+  # Deur verkoop instellingen (voor het kloppen op deuren)
+  deur:
+    # Minimale prijs die een klant wil betalen per stuk wiet
+    # Dit is de ondergrens voor de random prijs berekening
+    min-prijs: 40
+    
+    # Maximale prijs die een klant wil betalen per stuk wiet
+    # Dit is de bovengrens voor de random prijs berekening
+    max-prijs: 60
+    
+    # Kans dat een verkoop mislukt (0.0 = 0%, 1.0 = 100%)
+    # Bij een mislukking krijgt de speler geen geld
+    fail-chance: 0.3 # 30% kans op mislukking
+    
+    # Minimale hoeveelheid wiet die een klant wil kopen
+    # Dit is de ondergrens voor de random hoeveelheid berekening
+    min-hoeveelheid: 3
+    
+    # Maximale hoeveelheid wiet die een klant wil kopen
+    # Dit is de bovengrens voor de random hoeveelheid berekening
+    max-hoeveelheid: 5
+    
+    # Minimale prijs per stuk wiet tijdens deur verkoop
+    # Dit is de ondergrens voor de random prijs per stuk berekening
+    min-prijs-per-stuk: 10
+    
+    # Maximale prijs per stuk wiet tijdens deur verkoop
+    # Dit is de bovengrens voor de random prijs per stuk berekening
+    max-prijs-per-stuk: 20
+    
+    # Kans dat de persoon achter de deur de politie belt (0.0 = 0%, 1.0 = 100%)
+    # Bij een politie scenario wordt er geen wiet verkocht
+    politie-kans: 0.3 # 30% kans dat de persoon de politie belt
+    
+    # Maximale afstand in blokken die een speler van de deur mag zijn tijdens een gesprek
+    # Als de speler verder weg loopt, wordt het gesprek afgebroken
+    max-afstand: 6
+
+# ========================================
+# NPC SPAWN INSTELLINGEN
+# ========================================
+npc:
+  # Locaties waar NPCs automatisch spawnen
+  # Format: wereldnaam,x,y,z (coördinaten)
+  spawn-locaties:
+    - world,100,65,200
+    - world,150,65,250
+
+# ========================================
+# SHOP PRIJZEN
+# ========================================
+shop:
+  # Prijs voor het kopen van wiet zaden in de shop
+  zaad: 10
+  
+  # Prijs voor het kopen van wiet zakjes in de shop
+  zakje: 5
+  
+  # Prijs voor het kopen van upgrades in de shop
+  upgrade: 100
+
+# ========================================
+# HOLOGRAM INSTELLINGEN
+# ========================================
+hologram:
+  # Tekst die wordt getoond tijdens de groei van een wiet plant
+  # %seconds_left% wordt vervangen door de resterende tijd in seconden
+  grow-text: "&aWiet groeit... %seconds_left%s"
+  
+  # Tekst die wordt getoond tijdens het oogst countdown
+  # %seconds_left% wordt vervangen door de resterende tijd in seconden
+  oogst-countdown: "&eOogsten: %seconds_left%s" 
