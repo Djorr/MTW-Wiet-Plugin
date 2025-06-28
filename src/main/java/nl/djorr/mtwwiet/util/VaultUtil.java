@@ -5,20 +5,37 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
- * Utility voor Vault economy integratie.
+ * Utility class voor Vault economy integratie.
  */
 public class VaultUtil {
-    private static Economy econ = null;
-
+    private static Economy economy = null;
+    
+    /**
+     * Initialiseer de economy service.
+     */
     public static boolean setupEconomy() {
-        if (econ != null) return true;
-        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) return false;
-        econ = rsp.getProvider();
-        return econ != null;
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = Bukkit.getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        economy = rsp.getProvider();
+        return economy != null;
     }
-
+    
+    /**
+     * Haal de economy service op.
+     */
     public static Economy getEconomy() {
-        return econ;
+        return economy;
+    }
+    
+    /**
+     * Check of economy beschikbaar is.
+     */
+    public static boolean isEconomyAvailable() {
+        return economy != null;
     }
 } 

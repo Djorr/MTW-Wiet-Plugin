@@ -36,6 +36,15 @@ commands:
   seed-received: "&aJe hebt een wietzaadje ontvangen!"
   unknown-subcommand: "&cOnbekend subcommando."
   no-permission: "&cJe hebt geen permissie om dit commando te gebruiken!"
+  npc-despawned: "§aDealer NPC succesvol verwijderd."
+  npc-no-entity: "§cJe kijkt niet naar een dealer NPC. Kijk direct naar een dealer NPC binnen 5 blokken."
+  zaadje-gegeven: "&aJe hebt &e{amount} &awietzaadjes gekregen!"
+  geld-gegeven: "&aJe hebt &e{amount} &ageld gegeven aan &e{player}&a!"
+  geld-ontvangen: "&aJe hebt &e{amount} &ageld ontvangen van &e{admin}&a!"
+  balans: "&aJe balans: &e{balance}"
+  reload: "&aConfiguratie herladen!"
+  invcheck-geen-speler: "&cSpeler niet gevonden!"
+  invcheck-geen-permissie: "&cJe hebt geen permissie om dit commando te gebruiken!"
 
 # ========================================
 # PLANTING BERICHTEN
@@ -45,21 +54,25 @@ planting:
   cannot-plant: "&cJe kunt hier geen wiet planten."
   grass-only: "&cJe kunt alleen op gras planten!"
   need-seed: "&cJe moet een wietzaadje in je hand hebben om te planten!"
-  already-planted: "&cHier staat al een plant!"
+  already-planted: "&cEr staat al een plant op deze locatie."
   not-enough-space: "&cEr is te weinig ruimte boven de plant om te groeien!"
   not-ready: "&eDeze plant is nog niet klaar om te oogsten!"
   already-harvesting: "&cIemand anders is deze plant al aan het oogsten!"
   cannot-break: "&cJe kunt deze plant niet kapotslaan! Oogst hem via de minigame."
-  growing-text: "&aWiet groeit... {seconds}s"
+  cannot-break-others: "&cJe kunt alleen je eigen wietplanten kapotslaan!"
+  cannot-harvest-with-item: "&cJe kunt alleen oogsten met lege handen!"
+  growing-text: "%seconds%s"
   ready-to-harvest: "&aKlaar om te oogsten!"
   too-close-to-dealer: "&cJe kunt niet planten in de buurt van een dealer!"
+  invalid-seed: "§cJe moet een echt wietzaadje gebruiken! Koop ze bij de dealer of in de winkel."
 
 # ========================================
 # HARVESTING BERICHTEN
 # ========================================
 harvesting:
-  success: "&aSuccesvol geoogst! Je ontvangt Wiet."
-  failed: "&cMislukt! Je hebt je vingers gesneden."
+  success: "&aJe hebt succesvol wiet geoogst!"
+  failed: "&cDe oogst is mislukt!"
+  inventory-closed: "&cJe hebt je inventory gesloten tijdens het oogsten! De plant is vernietigd."
   inventory-title: "&aOogst de wiet!"
   wrong-block: "&cFout!"
   correct-block: "&aKlik mij!"
@@ -69,8 +82,13 @@ harvesting:
 # SHOP BERICHTEN
 # ========================================
 shop:
+  title: "§aWietwinkel"
   not-enough-money: "&cJe hebt niet genoeg geld!"
-  purchase-success: "&aAankoop gelukt!"
+  purchase-success: "§aJe hebt een wietzaadje gekocht voor {price} euro!"
+  open: "&aShop geopend!"
+  koop-succes: "&aJe hebt &e{amount} &a{item} gekocht voor &e{price} &ageld!"
+  niet-genoeg-geld: "&cJe hebt niet genoeg geld!"
+  niet-genoeg-voorraad: "&cEr is niet genoeg voorraad!"
 
 # ========================================
 # BAG BERICHTEN
@@ -95,35 +113,38 @@ items:
 # ========================================
 verkoop:
   deur:
-    cooldown: "&e[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
-    hit-count: "&eJe klopt op de deur... ({hits}/{needed})"
-    already-conversing: ""
-    greeting: "&e[Persoon achter deur] &fWat doe je hier?"
-    offer: "&e[{player}] &fIk heb wiet voor je te koop."
-    police-scenario: "&e[Persoon achter deur] &fPunch, punch, punchen..."
-    police-call: "&e[Persoon achter deur] &fIk ga een melding plaatsen bij de politie!"
+    knock-1: "&eJe klopt één keer op de deur..."
+    knock-2: "&eJe klopt twee keer op de deur..."
+    greeting: "&7[Persoon achter deur] &fWat doe je hier?"
+    offer: "&7[Persoon achter deur] &fWat wil je verkopen?"
+    cooldown: "&7[Persoon achter deur] &fIk heb al genoeg gekocht op dit moment, ik ben op dit moment niet meer geïnteresseerd."
+    police-scenario: "&e[Persoon achter deur] &fPunt, punt, punt..."
+    police-call: "&e[Persoon achter deur] &fIk ga de politie bellen!"
     police-leave: "&e[Persoon achter deur] &fWeg voor mijn deur!"
-    normal-scenario: "&e[Persoon achter deur] &fOké, hoeveel per stuk?"
+    normal-scenario: "&7[Persoon achter deur] &fOké, hoeveel per stuk?"
     weed-count: "&e[{player}] &fIk heb er {count} en ze kosten {price} euro per stuk."
-    request: "&e[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
-    no-weed: "&e[{player}] &fIk heb helemaal geen wiet meer."
+    request: "&7[Persoon achter deur] &fOké, ik wil er {amount} kopen van je."
+    no-weed: "&cJe hebt geen wiet om te verkopen!"
     no-offer: "&e[Persoon achter deur] &fOké, maar waarom kom je dan op mijn deur staan als je helemaal niks hebt?"
     insufficient-weed: "&e[{player}] &fIk heb er maar {count}."
     insufficient-offer: "&e[Persoon achter deur] &fNee, dankjewel. Ik wil er echt {amount} op dit moment hebben."
     total-price: "&e[{player}] &fOké, dat is dan {total} euro."
-    perfect: "&e[Persoon achter deur] &fPerfect!"
+    perfect: "&7[Persoon achter deur] &fPerfect!"
     success: "&aJe hebt succesvol {amount} wiet verkocht voor {total} euro!"
     too-far: "&e[Persoon achter deur] &fWaarom loop je weg? Oké, dan niet."
-    # Politie meldingen
-    police-notification: "&c&l[POLITIE MELDING] &fSpeler {player} is betrapt bij illegale verkoop op locatie {location}!"
-    # Geen wiet scenario's - verschillende reacties
-    no-weed-response-1: "&e[Persoon achter deur] &fOké, maar waarom kom je dan op mijn deur staan als je helemaal niks hebt?"
-    no-weed-response-2: "&e[Persoon achter deur] &fDan heb je hier niks te zoeken. Wegwezen!"
-    no-weed-response-3: "&e[Persoon achter deur] &fIk hoef je op dit moment niet meer te zien."
-    no-weed-response-4: "&e[Persoon achter deur] &fZonde van mijn tijd. Kom terug als je wat hebt."
-    no-weed-response-5: "&e[Persoon achter deur] &fDan niet. Ik heb betere dingen te doen."
+    leave: "&7[Persoon achter deur] &fOké, tot ziens dan."
+    unknown: "&7[Persoon achter deur] &fWat zeg je? Ik begrijp je niet."
+    already-in-conversation: "&cJe bent al in gesprek met iemand achter een deur!"
+    police-notification: "&c&l[POLITIE] &fEr is verdachte activiteit gemeld op locatie &e{world} {x}, {y}, {z}&f!"
+    knock-timeout: "&e[Persoon achter deur] &fWie is daar..? Ooh.. vast niks.."
   npc:
     success: "&aVerkocht aan NPC voor &e{amount}"
+  deur-kloppen: "&eJe klopt op de deur..."
+  geen-wiet: "&cJe hebt geen wiet om te verkopen!"
+  verkoop-succes: "&aJe hebt &e{amount} &awiet verkocht voor &e{price} &ageld!"
+  verkoop-mislukt: "&cDe verkoop is mislukt!"
+  politie-melding: "&c&l[POLITIE] &fEr is verdachte activiteit gemeld op locatie &e{world} {x}, {y}, {z}&f!"
+  cooldown: "&cJe moet nog &e{time} &cseconden wachten voordat je weer kunt verkopen!"
 
 # ========================================
 # NPC SELLING BERICHTEN
@@ -145,3 +166,50 @@ npc-selling:
 # {seconds} - Seconden (voor groei timer)
 # {kwaliteit} - Kwaliteit van wiet
 # {location} - Locatie van de verkoop 
+
+# ========================================
+# PERMISSIE BERICHTEN
+# ========================================
+geen-permissie: "&cJe hebt geen permissie om dit te doen."
+
+# ========================================
+# NPC BERICHTEN
+# ========================================
+npc:
+  spawn: "&aDealer NPC gespawnd!"
+  despawn: "&aDealer NPC verwijderd!"
+  niet-gevonden: "&cGeen dealer NPC gevonden!"
+
+# ========================================
+# ANTI-DUPE BERICHTEN
+# ========================================
+anti-dupe:
+  verdachte-activiteit: "&c&l[ANTI-DUPE] &fVerdachte activiteit gedetecteerd!"
+  speler: "&7Speler: &e{player}"
+  reden: "&7Reden: &e{reason}"
+  details: "&7Details: &e{details}"
+  verdachte-activiteiten: "&7Verdachte activiteiten: &e{count}"
+  klik-inventory: "&7Klik hier om inventory te bekijken: &a/invcheck {player}"
+
+# ========================================
+# FOUT BERICHTEN
+# ========================================
+errors:
+  vault-niet-gevonden: "&cVault plugin niet gevonden! Economie functionaliteit is uitgeschakeld."
+  holographicdisplays-niet-gevonden: "&cHolographicDisplays plugin niet gevonden! Hologrammen zijn uitgeschakeld."
+  citizens-niet-gevonden: "&cCitizens plugin niet gevonden! NPC functionaliteit is uitgeschakeld."
+
+# ========================================
+# DEALER CONVERSATION BERICHTEN
+# ========================================
+dealer:
+  conversation:
+    ask-amount: "&e[Dealer] &fHoeveel zaadjes wil je kopen? ({min}-{max})"
+    invalid-amount: "&e[Dealer] &fDat is geen geldige hoeveelheid. Kies een getal tussen {min} en {max}."
+    invalid-number: "&e[Dealer] &fIk heb een getal gevraagd, geen woorden. Hoeveel wil je?"
+    confirm-purchase: "&e[Dealer] &fOké, {amount} zaadjes voor {total_cost} euro. Bevestig je aankoop? (ja/nee)"
+    cancelled: "&e[Dealer] &fOké, misschien een andere keer."
+    purchase-cancelled: "&e[Dealer] &fAankoop geannuleerd."
+    completed: "&e[Dealer] &fTot ziens! Kom terug als je meer nodig hebt."
+    left-range: "&e[Dealer] &fWaar ga je heen? Oké, dan niet."
+    already-in-conversation: "&e[Dealer] &fJe bent al in gesprek met een dealer!" 

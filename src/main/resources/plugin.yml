@@ -1,4 +1,4 @@
-name: MTW-Wiet
+name: MTWWiet
 version: 1.0.0
 main: nl.djorr.mtwwiet.MTWWiet
 author: Djorr
@@ -6,12 +6,18 @@ description: Een uitgebreide wiet kweeksysteem plugin met planten, oogsten, verk
 api-version: 1.13
 depend: [Vault]
 softdepend: [Citizens, HolographicDisplays]
+website: https://discord.rubixdevelopment.nl
 
 commands:
   wiet:
     description: Hoofdcommando voor de MTW-Wiet plugin
     usage: /wiet [plant|balans|geefgeld|npc|winkel|reload|cleanuparmorstands|zaadje]
     permission: weedplugin.use
+    permission-message: Je hebt geen permissie om dit commando te gebruiken!
+  invcheck:
+    description: Bekijk de inventory van een speler (admin commando)
+    usage: /invcheck <speler>
+    permission: weedplugin.admin
     permission-message: Je hebt geen permissie om dit commando te gebruiken!
 
 permissions:
@@ -30,6 +36,7 @@ permissions:
       weedplugin.zaadje: true
       weedplugin.verkoop.deur: true
       weedplugin.politie: true
+      weedplugin.admin: true
     default: op
   weedplugin.use:
     description: Basis plugin gebruik
@@ -66,4 +73,7 @@ permissions:
     default: true
   weedplugin.politie:
     description: Politie meldingen ontvangen
+    default: op
+  weedplugin.admin:
+    description: Admin functies (inventory check, anti-dupe)
     default: op

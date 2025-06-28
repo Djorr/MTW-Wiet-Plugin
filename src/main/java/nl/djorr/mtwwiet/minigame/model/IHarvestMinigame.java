@@ -1,5 +1,7 @@
-package nl.djorr.mtwwiet.minigame;
+package nl.djorr.mtwwiet.minigame.model;
 
+import org.bukkit.entity.Player;
+import nl.djorr.mtwwiet.plant.model.PlantData;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
@@ -20,4 +22,8 @@ public interface IHarvestMinigame {
      * Verwerk een click in de minigame-GUI.
      */
     void handleClick(InventoryClickEvent event);
+
+    boolean isActive();
+    Player getPlayer();
+    PlantData getPlant();
 } 

@@ -1,35 +1,220 @@
 # ========================================
-# WeedPlugin Configuratie
+# MTWWiet Plugin Configuratie
 # ========================================
-# Dit bestand bevat alle instellingen voor de WeedPlugin
-# Wijzig deze waarden om het gedrag van de plugin aan te passen
 
 # ========================================
-# PLANT GROEI INSTELLINGEN
+# PLANT CONFIGURATIE
 # ========================================
 plant:
-  # Tijd in seconden die een wiet plant nodig heeft om volledig te groeien
-  # Na deze tijd kan de plant geoogst worden via het oogst minigame
-  grow-time-seconds: 300 # 5 minuten
+  grow-time-seconds: 3  # Groei tijd in seconden
 
 # ========================================
-# OOGST MINIGAME INSTELLINGEN
+# OOGST MINIGAME CONFIGURATIE
 # ========================================
 oogst-minigame:
-  # Tijdslimiet in seconden voor het oogst minigame
-  # De speler moet binnen deze tijd alle wiet blokken vinden
-  time-limit-seconds: 5
+  time-limit-seconds: 15  # Tijdslimiet voor oogst minigame
+  fail-damage: 2  # Schade bij mislukking
+
+# ========================================
+# VERKOOP CONFIGURATIE
+# ========================================
+verkoop:
+  deur:
+    cooldown-time: 300000  # 5 minuten cooldown
+    max-time-between-knocks: 2000  # 2 seconden tussen klopjes
+    politie-kans: 0.3      # 30% kans op politie melding
+    min-prijs-per-stuk: 10
+    max-prijs-per-stuk: 20
+
+# ========================================
+# SHOP CONFIGURATIE
+# ========================================
+shop:
+  weed-seed-price: 50
+  weed-price: 100
+
+# ========================================
+# NPC DEALER CONFIGURATIE
+# ========================================
+npc-dealer:
+  # Conversatie instellingen
+  conversation:
+    range-blocks: 3  # Afstand in blokken voor conversatie
+    timeout-seconds: 30  # Timeout voor conversatie in seconden
   
-  # Schade die de speler krijgt als het minigame mislukt
-  # Dit is de hoeveelheid hartjes die verloren gaan
-  fail-damage: 2
+  # Prijzen (per stuk)
+  prices:
+    weed-seed: 50  # Prijs per wietzaadje
+  
+  # Voorraad instellingen
+  stock:
+    max-weed-seeds: 100  # Maximale voorraad wietzaadjes
+    restock-interval-minutes: 10  # Hoe vaak voorraad wordt aangevuld
+  
+  # Conversatie berichten
+  messages:
+    dealer-greeting:
+      - "§a[Dealer] §fYo, wat moet je? Je zoekt wat groens, of niet soms?"
+      - "§a[Dealer] §fHé, kom effe hier, ik heb goeie shit voor je."
+      - "§a[Dealer] §fPsst, jij daar! Je wilt toch scoren?"
+    
+    dealer-offer:
+      - "§a[Dealer] §fVoor jou, bro, §e{price}§f per zaadje. Niet verder vertellen, hè."
+      - "§a[Dealer] §fIk fix je wietzaadjes voor §e{price}§f per stuk. Snel cashen."
+      - "§a[Dealer] §fWil je groeien? §e{price}§f per zaadje, easy money."
+    
+    dealer-stock:
+      - "§a[Dealer] §fIk heb nog maar §e{stock}§f zaadjes liggen, dus wees snel."
+      - "§a[Dealer] §fBro, ik kan je max §e{stock}§f zaadjes fixen, meer heb ik niet."
+      - "§a[Dealer] §fVoor jou heb ik nu §e{stock}§f zaadjes, niet meer, niet minder."
+    
+    dealer-purchase:
+      - "§a[Dealer] §fCash ontvangen, hier zijn je §e{amount}§f zaadjes. Doe er wat leuks mee."
+      - "§a[Dealer] §fTop, je hebt §e{total_price}§f betaald, hier zijn je §e{amount}§f zaadjes."
+      - "§a[Dealer] §fGoeie deal, ouwe. Pak je zaadjes en ga planten."
+    
+    dealer-insufficient-funds:
+      - "§a[Dealer] §fBro, je hebt niet genoeg money. Je hebt §e{player_money}§f nodig."
+      - "§a[Dealer] §fKom terug als je meer cash hebt, nu lukt het niet."
+      - "§a[Dealer] §fGeen geld, geen zaadjes. Zo werkt het."
+    
+    dealer-insufficient-stock:
+      - "§a[Dealer] §fIk heb er maar §e{stock}§f, dus hou het realistisch."
+      - "§a[Dealer] §fMeer dan §e{stock}§f kan ik je niet geven, bro."
+      - "§a[Dealer] §fVoorraad is laag, max §e{stock}§f voor jou."
+    
+    dealer-farewell:
+      - "§a[Dealer] §fAls je niks wil, ga dan effe weg joh."
+      - "§a[Dealer] §fJe weet me te vinden als je wat wil scoren."
+      - "§a[Dealer] §fLater, misschien volgende keer meer geluk."
+    
+    player-interested:
+      - "§e[Speler] §fJa man, ik wil wel wat."
+      - "§e[Speler] §fWat heb je allemaal voor me?"
+      - "§e[Speler] §fLaat maar zien dan."
+    
+    player-ask-price:
+      - "§e[Speler] §fWat vraag je voor die zaadjes?"
+      - "§e[Speler] §fHoeveel moet ik lappen per stuk?"
+      - "§e[Speler] §fWat kost het me, bro?"
+    
+    player-buy-amount:
+      - "§e[Speler] §fDoe mij er {amount}."
+      - "§e[Speler] §fIk neem {amount} zaadjes van je."
+      - "§e[Speler] §f{amount} stuks graag."
+    
+    dealer-ask-amount:
+      - "§a[Dealer] §fHoeveel wil je scoren? ({min}-{max})"
+      - "§a[Dealer] §fDus, hoeveel zaadjes moet ik voor je fixen? ({min}-{max})"
+      - "§a[Dealer] §fOké, hoeveel ga ik je geven? ({min}-{max})"
+    
+    dealer-invalid-amount:
+      - "§a[Dealer] §fBro, dat is geen geldige hoeveelheid. Kies een getal tussen {min} en {max}."
+      - "§a[Dealer] §fHou het realistisch, {min} tot {max} zaadjes."
+      - "§a[Dealer] §fMeer dan {max} kan ik je niet geven, minder dan {min} heeft geen zin."
+    
+    dealer-invalid-number:
+      - "§a[Dealer] §fBro, ik heb een getal gevraagd, geen woorden. Hoeveel wil je?"
+      - "§a[Dealer] §fIk snap je niet. Geef me een getal tussen {min} en {max}."
+      - "§a[Dealer] §fWat zeg je nou? Gewoon een getal, man."
+    
+    dealer-confirm-purchase:
+      - "§a[Dealer] §fOké, {amount} zaadjes voor {total_cost} euro. Deal? (ja/nee)"
+      - "§a[Dealer] §fDus {amount} zaadjes voor {total_cost} euro. Bevestig je dat?"
+      - "§a[Dealer] §f{amount} zaadjes voor {total_cost} euro. Ga je akkoord?"
+    
+    dealer-purchase-cancelled:
+      - "§a[Dealer] §fOké, misschien een andere keer."
+      - "§a[Dealer] §fDan niet, je weet me te vinden."
+      - "§a[Dealer] §fAankoop geannuleerd. Later."
+    
+    dealer-conversation-completed:
+      - "§a[Dealer] §fTot ziens! Kom terug als je meer nodig hebt."
+      - "§a[Dealer] §fLater, bro. Je weet me te vinden."
+      - "§a[Dealer] §fPleasure doing business. Tot de volgende keer."
+    
+    dealer-left-range:
+      - "§a[Dealer] §fWaar ga je heen? Oké, dan niet."
+      - "§a[Dealer] §fBlijf hier als je wat wil scoren."
+      - "§a[Dealer] §fKom terug als je wat wil kopen."
+    
+    dealer-already-in-conversation:
+      - "§a[Dealer] §fJe bent al in gesprek met een dealer!"
+      - "§a[Dealer] §fWacht even, je praat al met iemand anders."
+      - "§a[Dealer] §fEerst je andere gesprek afmaken, bro."
+    
+    # Payment conversation berichten
+    dealer-payment-request:
+      - "§a[Dealer] §fPerfect! Betaal me nu §e{total_cost} euro§f."
+      - "§a[Dealer] §fOké, geef me §e{total_cost} euro§f en je krijgt je zaadjes."
+      - "§a[Dealer] §fDeal! Hand over §e{total_cost} euro§f en je krijgt §e{amount} zaadjes§f."
+    
+    dealer-payment-reminder:
+      - "§a[Dealer] §fIk wacht nog steeds op §e{total_cost} euro§f."
+      - "§a[Dealer] §fGeef me het geld of ga weg. §e{total_cost} euro§f voor §e{amount} zaadjes§f."
+      - "§a[Dealer] §fBetaal me of vertrek. §e{total_cost} euro§f, nu!"
+    
+    dealer-scam-detected:
+      - "§a[Dealer] §fDit is helemaal geen §e{total_cost} euro§f! Probeer je me te scammen?"
+      - "§a[Dealer] §fWeet je wel wie je bent? Probeer geen ongein bij mij!"
+      - "§a[Dealer] §fBen je dood ofzo? Dit is niet genoeg geld!"
+      - "§a[Dealer] §fJe denkt dat je me kunt oplichten? Wegwezen!"
+    
+    dealer-payment-success:
+      - "§a[Dealer] §fOké, hier zijn je §e{amount} zaadjes§f. Doe er wat leuks mee."
+      - "§a[Dealer] §fPerfect! Hier zijn je §e{amount} zaadjes§f. Veel succes!"
+      - "§a[Dealer] §fGoeie deal, ouwe. Pak je §e{amount} zaadjes§f en ga planten."
+    
+    dealer-payment-error:
+      - "§a[Dealer] §fEr ging iets mis. Probeer opnieuw."
+    
+    # Speler berichten voor conversatie
+    player-payment-confirmation:
+      - "§e[{player}] §fOké, hier heb je §e{total_cost} euro§f."
+      - "§e[{player}] §fHier is je geld, §e{total_cost} euro§f."
+      - "§e[{player}] §fBetaal je, §e{total_cost} euro§f."
+
+# ========================================
+# CUSTOM ITEMS LORE CONFIGURATIE
+# ========================================
+custom-items:
+  weed-seed:
+    name: "§aWietzaadje"
+    lore:
+      - "§7Dit zijn wietzaadjes die je kunt planten op gras"
+      - "§7Plant ze om wiet te laten groeien"
+      - ""
+      - "§c⚠ Illegaal item"
+      - "§7Officieel item van MT Wars"
+  weed:
+    name: "§aWiet"
+    lore:
+      - "§7Vers geoogste wiet van hoge kwaliteit"
+      - "§7Je kunt dit verkopen aan deuren"
+      - ""
+      - "§c⚠ Illegaal item"
+      - "§7Officieel item van MT Wars"
+
+# ========================================
+# ANTI-DUPE CONFIGURATIE
+# ========================================
+anti-dupe:
+  check-interval-seconds: 5
+  suspicious-increase-threshold: 5
+  max-suspicious-activities: 3
+
+# ========================================
+# ECONOMY CONFIGURATIE
+# ========================================
+economy:
+  start-balance: 100  # Startgeld voor nieuwe spelers
 
 # ========================================
 # PLANTING CONFIGURATIE
 # ========================================
 planting:
-  # Groeitijd in milliseconden (5 minuten)
-  grow-time: 300000
+  # Groeitijd in milliseconden (3 seconden)
+  grow-time: 3000
   # Minimale afstand tussen planten (in blokken)
   min-distance: 3
   # Minimale afstand tot dealer (in blokken)
@@ -47,53 +232,6 @@ harvesting:
   quality: 8
   # Schade die de speler krijgt als het minigame mislukt
   fail-damage: 2
-
-# ========================================
-# SHOP CONFIGURATIE
-# ========================================
-shop:
-  # Prijs voor wietzaadje
-  zaad: 50
-
-# ========================================
-# VERKOOP CONFIGURATIE
-# ========================================
-verkoop:
-  deur:
-    # Cooldown tijd in milliseconden (5 minuten)
-    cooldown-time: 300000
-    # Aantal klopjes nodig om deur te openen
-    hits-needed: 3
-    # Maximale afstand tijdens gesprek
-    max-afstand: 6
-    # Kans dat politie wordt gebeld (0.0 - 1.0)
-    politie-kans: 0.3
-    # Minimale prijs per stuk wiet
-    min-prijs-per-stuk: 10
-    # Maximale prijs per stuk wiet
-    max-prijs-per-stuk: 20
-    # Minimale hoeveelheid die wordt gevraagd
-    min-hoeveelheid: 3
-    # Maximale hoeveelheid die wordt gevraagd
-    max-hoeveelheid: 5
-    # Aantal pogingen voordat politie wordt gebeld (3-5)
-    max-attempts-before-police: 4
-    # Cooldown direct af bij geen wiet scenario
-    cooldown-on-no-weed: true
-    # Politie meldingen inschakelen
-    police-notifications: true
-    # Politie permissie voor meldingen
-    police-permission: "weedplugin.politie"
-  npc:
-    # Prijs per wietzak bij NPC verkoop
-    prijs-per-zak: 15
-
-# ========================================
-# ECONOMY CONFIGURATIE
-# ========================================
-economy:
-  # Startgeld voor nieuwe spelers
-  start-balance: 100
 
 # ========================================
 # NPC SPAWN INSTELLINGEN

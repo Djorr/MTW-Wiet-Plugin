@@ -1,0 +1,16 @@
+# ========================================
+# Doors Cooldown Configuration
+# ========================================
+# Dit bestand slaat cooldowns op per deur per speler
+# Format: wereldnaam,x,y,z -> speler UUID -> timestamp
+
+# Voorbeeld:
+# cooldowns:
+#   world,100,65,200:
+#     "12345678-1234-1234-1234-123456789abc": 1640995200000
+#   world,150,65,250:
+#     "87654321-4321-4321-4321-cba987654321": 1640995300000
+
+cooldowns:
+  # Cooldowns worden automatisch toegevoegd en verwijderd
+  # door het plugin systeem 
