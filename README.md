@@ -5,6 +5,7 @@ Een uitgebreide Minecraft plugin voor een realistisch wiet kweeksysteem met plan
 ## 📋 Inhoudsopgave
 
 - [Features](#-features)
+- [Demo Video](#-demo-video)
 - [Installatie](#-installatie)
 - [Configuratie](#-configuratie)
 - [Commando's](#-commando's)
@@ -67,6 +68,21 @@ Een uitgebreide Minecraft plugin voor een realistisch wiet kweeksysteem met plan
 - **Module systeem**: Gescheiden functionaliteiten per module
 - **Event-driven**: Moderne event-driven architectuur
 - **Configurable**: Volledig configureerbare messages en instellingen
+
+## 🎥 Demo Video
+
+Bekijk de plugin in actie! Deze video toont alle features en functionaliteiten van de MTWWiet plugin:
+
+[![MTWWiet Plugin Demo](https://img.youtube.com/vi/bvWoa7nXgJE/0.jpg)](https://www.youtube.com/watch?v=bvWoa7nXgJE)
+
+**[Bekijk de volledige demo op YouTube](https://www.youtube.com/watch?v=bvWoa7nXgJE)**
+
+De video toont:
+- 🌱 Plant systeem met groei en hologrammen
+- 🎮 Oogst minigame functionaliteit
+- 💰 Verkoop systeem met dealer conversaties
+- 🛡️ Anti-dupe systeem in actie
+- 🏪 Shop systeem en NPC interacties
 
 ## 🚀 Installatie
 
