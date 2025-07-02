@@ -140,7 +140,9 @@ public class SellListener implements Listener {
         if (!blockName.contains("DOOR")) return;
         
         Player player = event.getPlayer();
-        if (!player.hasPermission("weedplugin.verkopen") && !player.isOp()) return;
+
+        // NIEUW: Check of speler een custom wiet-item in zijn hand heeft
+        if (!customItems.isWeed(player.getInventory().getItemInMainHand())) return;
         
         // Check of speler al in een deur conversatie zit
         if (doorConversations.containsKey(player.getUniqueId())) {
@@ -149,7 +151,7 @@ public class SellListener implements Listener {
             return;
         }
         
-        // Check of speler wiet heeft met metadata
+        // (optioneel) Check of speler wiet heeft in inventory (voor andere logica)
         if (!customItems.hasWeedItems(player)) {
             player.sendMessage(MessageUtil.getMessage("verkoop.deur.no-weed"));
             return;
